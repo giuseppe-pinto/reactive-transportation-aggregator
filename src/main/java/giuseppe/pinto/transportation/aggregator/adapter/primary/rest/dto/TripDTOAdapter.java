@@ -18,8 +18,8 @@ public class TripDTOAdapter {
                                 trip.getArrival(),
                                 trip.getDepartureDate().format(formatter),
                                 trip.getArrivalDate().format(formatter),
-                                trip.getAirline(),
-                                trip.getFlightNumber(),
+                                trip.getCarrier(),
+                                trip.getCarrierNumber(),
                                 trip.getPrice().toString(),
                                 trip.getCurrency().getCurrencyCode(),
                                 trip.getDriver().name()))

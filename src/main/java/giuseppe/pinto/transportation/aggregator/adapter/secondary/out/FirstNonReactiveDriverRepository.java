@@ -20,8 +20,8 @@ public class FirstNonReactiveDriverRepository implements NonReactiveDriverReposi
 
         Trip trip = Trip.builder()
                 .driver(Driver.FIRST)
-                .airline("GIUSEPPE_AIRLINE")
-                .flightNumber("1000")
+                .carrier("GIUSEPPE_AIRLINE")
+                .carrierNumber("1000")
                 .departure(searchRequest.getDeparture())
                 .arrival(searchRequest.getArrival())
                 .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0))

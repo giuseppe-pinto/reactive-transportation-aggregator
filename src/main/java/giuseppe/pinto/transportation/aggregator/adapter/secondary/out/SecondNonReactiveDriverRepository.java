@@ -21,8 +21,8 @@ public class SecondNonReactiveDriverRepository implements NonReactiveDriverRepos
 
         Trip trip = Trip.builder()
                 .driver(Driver.SECOND)
-                .airline("PAOLO_AIRLINE")
-                .flightNumber("2000")
+                .carrier("PAOLO_AIRLINE")
+                .carrierNumber("2000")
                 .departure(searchRequest.getDeparture())
                 .arrival(searchRequest.getArrival())
                 .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0))
@@ -33,8 +33,8 @@ public class SecondNonReactiveDriverRepository implements NonReactiveDriverRepos
 
         Trip secondTrip = Trip.builder()
                 .driver(Driver.SECOND)
-                .airline("MARIO_AIRLINE")
-                .flightNumber("2050")
+                .carrier("MARIO_AIRLINE")
+                .carrierNumber("2050")
                 .departure(searchRequest.getDeparture())
                 .arrival(searchRequest.getArrival())
                 .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 8, 0))

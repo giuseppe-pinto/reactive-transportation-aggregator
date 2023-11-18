@@ -1,6 +1,5 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
-import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.NonReactiveDriverRepository;
@@ -22,8 +21,8 @@ public class ThirdNonReactiveDriverRepository implements NonReactiveDriverReposi
 
         Trip trip = Trip.builder()
                 .driver(THIRD)
-                .airline("FRANCO_AIRLINE")
-                .flightNumber("3000")
+                .carrier("FRANCO_AIRLINE")
+                .carrierNumber("3000")
                 .departure(searchRequest.getDeparture())
                 .arrival(searchRequest.getArrival())
                 .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 16, 0))

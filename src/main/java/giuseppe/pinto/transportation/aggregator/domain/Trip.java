@@ -19,8 +19,8 @@ public class Trip {
     private final String arrival;
     private final LocalDateTime departureDate;
     private final LocalDateTime arrivalDate;
-    private final String flightNumber;
-    private final String airline;
+    private final String carrierNumber;
+    private final String carrier;
     private final BigDecimal price;
     private final Currency currency;
     private final Driver driver;
