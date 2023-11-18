@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping(value = "/aggregator")
-public class TransportationSearchController {
+public class TransportationAggregatorController {
 
     private final SearchTripsUseCase searchTripsUseCase = new StandardSearchTripsUseCase();
 

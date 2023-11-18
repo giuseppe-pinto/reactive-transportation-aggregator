@@ -2,10 +2,12 @@ package giuseppe.pinto.transportation.aggregator.port.out;
 
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-public interface DriverRepository {
+import java.util.List;
 
-    Flux<Trip> performRequest(SearchRequest searchRequest);
+public interface NonReactiveDriverRepository {
+
+    Mono<List<Trip>> performRequest(SearchRequest searchRequest);
 
 }
