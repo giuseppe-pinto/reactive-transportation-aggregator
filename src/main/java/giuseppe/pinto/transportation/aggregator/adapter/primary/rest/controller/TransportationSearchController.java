@@ -4,17 +4,24 @@ import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchR
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.TripDTO;
 import giuseppe.pinto.transportation.aggregator.port.in.SearchTripsUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardSearchTripsUseCase;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
+@RestController
+@RequestMapping(value = "/aggregator")
 public class TransportationSearchController {
 
-    SearchTripsUseCase searchTripsUseCase = new StandardSearchTripsUseCase();
+    private final SearchTripsUseCase searchTripsUseCase = new StandardSearchTripsUseCase();
 
     @PostMapping("/search")
     public Flux<TripDTO> getEmployeeById(@RequestBody SearchRequestDTO searchRequest) {
         return searchTripsUseCase.searchOn(searchRequest);
+    }
+
+
+    @GetMapping("/health")
+    public String health() {
+        return "OK";
     }
 
 
