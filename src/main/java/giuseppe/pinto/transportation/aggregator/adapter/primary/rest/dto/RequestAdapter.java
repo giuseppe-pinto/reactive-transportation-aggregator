@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class RequestAdapter {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public SearchRequest from(SearchRequestDTO searchRequestDTO){
 

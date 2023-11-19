@@ -20,6 +20,8 @@ public class RedDriverRepository implements MultiTripReactiveDriverRepository {
     @Override
     public Mono<List<Trip>> performRequest(SearchRequest searchRequest) {
 
+        System.out.println("Calling the provider: " + RED);
+
 
         Trip trip = Trip.builder()
                 .driver(RED)

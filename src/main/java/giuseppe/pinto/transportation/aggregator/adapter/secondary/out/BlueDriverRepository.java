@@ -20,6 +20,8 @@ public class BlueDriverRepository implements MultiTripReactiveDriverRepository {
     @Override
     public Mono<List<Trip>> performRequest(SearchRequest searchRequest) {
 
+        System.out.println("Calling the provider: " + BLUE);
+
         Trip trip = Trip.builder()
                 .driver(BLUE)
                 .carrier("GIUSEPPE_AIRLINE")

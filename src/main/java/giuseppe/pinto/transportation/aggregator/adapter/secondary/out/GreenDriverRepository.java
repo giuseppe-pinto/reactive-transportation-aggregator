@@ -19,6 +19,8 @@ public class GreenDriverRepository implements MultiTripReactiveDriverRepository 
     @Override
     public Mono<List<Trip>> performRequest(SearchRequest searchRequest) {
 
+        System.out.println("Calling the provider: " + GREEN);
+
         Trip trip = Trip.builder()
                 .driver(GREEN)
                 .carrier("FRANCO_AIRLINE")

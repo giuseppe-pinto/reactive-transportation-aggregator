@@ -28,6 +28,7 @@ public class TripDTOAdapter {
                                 trip.getDriver().name()))
                         .build()).collect(Collectors.toList()));
 
+
     }
 
 }
