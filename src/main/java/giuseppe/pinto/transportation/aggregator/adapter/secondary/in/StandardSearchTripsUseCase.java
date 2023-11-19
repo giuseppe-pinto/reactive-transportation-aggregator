@@ -11,7 +11,7 @@ public class StandardSearchTripsUseCase implements SearchTripsUseCase {
 
     private final RequestAdapter requestAdapter = new RequestAdapter();
     private final TripDTOAdapter tripDTOAdapter = new TripDTOAdapter();
-    private final StandardTripsRepository tripsRepository = new StandardTripsRepository();
+    private final StandardTripsRepository tripsRepository = new StandardTripsRepository(new RealDriverConfigurationRepository());
 
 
     @Override
