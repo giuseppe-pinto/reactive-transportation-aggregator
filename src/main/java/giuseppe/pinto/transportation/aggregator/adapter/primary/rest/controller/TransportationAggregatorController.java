@@ -7,6 +7,8 @@ import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardSea
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/aggregator")
 public class TransportationAggregatorController {
@@ -14,7 +16,7 @@ public class TransportationAggregatorController {
     private final SearchTripsUseCase searchTripsUseCase = new StandardSearchTripsUseCase();
 
     @PostMapping("/search")
-    public Flux<TripDTO> getEmployeeById(@RequestBody SearchRequestDTO searchRequest) {
+    public Flux<List<TripDTO>> getTrips(@RequestBody SearchRequestDTO searchRequest) {
         return searchTripsUseCase.searchOn(searchRequest);
     }
 

@@ -1,4 +1,4 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
+package giuseppe.pinto.transportation.aggregator.port.out;
 
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.out.MultiTripReactiveDriverRepository;
