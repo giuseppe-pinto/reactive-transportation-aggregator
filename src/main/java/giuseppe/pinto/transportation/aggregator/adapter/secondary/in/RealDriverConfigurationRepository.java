@@ -1,10 +1,10 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.FirstNonReactiveDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.SecondNonReactiveDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.ThirdNonReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.BlueDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.RedDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.GreenDriverRepository;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
-import giuseppe.pinto.transportation.aggregator.port.out.NonReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.MultiTripReactiveDriverRepository;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ public class RealDriverConfigurationRepository implements DriverConfigurationRep
 
 
     @Override
-    public List<NonReactiveDriverRepository> getDriversFor(SearchRequest searchRequest) {
+    public List<MultiTripReactiveDriverRepository> getDriversFor(SearchRequest searchRequest) {
 
         return List.of(
-                new FirstNonReactiveDriverRepository(),
-                new SecondNonReactiveDriverRepository(),
-                new ThirdNonReactiveDriverRepository());
+                new BlueDriverRepository(),
+                new RedDriverRepository(),
+                new GreenDriverRepository());
 
     }
 }

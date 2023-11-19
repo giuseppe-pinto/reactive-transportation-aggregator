@@ -2,7 +2,7 @@ package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.in.TripsRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.NonReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.MultiTripReactiveDriverRepository;
 import reactor.core.publisher.Flux;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 
@@ -20,7 +20,7 @@ public class StandardTripsRepository implements TripsRepository {
     public Flux<Trip> getAll(SearchRequest searchRequest) {
 
 
-        List<NonReactiveDriverRepository> drivers = driverConfigurationRepository.getDriversFor(searchRequest);
+        List<MultiTripReactiveDriverRepository> drivers = driverConfigurationRepository.getDriversFor(searchRequest);
 
         /*return Flux.merge(
                 drivers

@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public interface NonReactiveDriverRepository {
+public interface MultiTripReactiveDriverRepository {
 
     Mono<List<Trip>> performRequest(SearchRequest searchRequest);
 

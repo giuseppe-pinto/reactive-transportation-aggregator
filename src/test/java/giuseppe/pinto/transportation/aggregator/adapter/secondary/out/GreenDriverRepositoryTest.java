@@ -16,7 +16,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-class ThirdNonReactiveDriverRepositoryTest {
+class GreenDriverRepositoryTest {
 
     private static final String DEPARTURE = "LIN";
     private static final String ARRIVAL = "NAP";
@@ -24,13 +24,13 @@ class ThirdNonReactiveDriverRepositoryTest {
     @Test
     void theThirdDriverRespondsIn7Seconds() {
 
-        ThirdNonReactiveDriverRepository underTest = new ThirdNonReactiveDriverRepository();
+        GreenDriverRepository underTest = new GreenDriverRepository();
 
         Mono<List<Trip>> mono = underTest.performRequest(request());
 
         StepVerifier.create(mono)
                 .expectNext(List.of(Trip.builder()
-                        .driver(Driver.THIRD)
+                        .driver(Driver.GREEN)
                         .carrier("FRANCO_AIRLINE")
                         .carrierNumber("3000")
                         .departure(DEPARTURE)

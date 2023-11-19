@@ -3,7 +3,7 @@ package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.NonReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.MultiTripReactiveDriverRepository;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -14,13 +14,15 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-public class SecondNonReactiveDriverRepository implements NonReactiveDriverRepository {
+import static giuseppe.pinto.transportation.aggregator.domain.Driver.*;
+
+public class RedDriverRepository implements MultiTripReactiveDriverRepository {
     @Override
     public Mono<List<Trip>> performRequest(SearchRequest searchRequest) {
 
 
         Trip trip = Trip.builder()
-                .driver(Driver.SECOND)
+                .driver(RED)
                 .carrier("PAOLO_AIRLINE")
                 .carrierNumber("2000")
                 .departure(searchRequest.getDeparture())
@@ -32,7 +34,7 @@ public class SecondNonReactiveDriverRepository implements NonReactiveDriverRepos
                 .build();
 
         Trip secondTrip = Trip.builder()
-                .driver(Driver.SECOND)
+                .driver(RED)
                 .carrier("MARIO_AIRLINE")
                 .carrierNumber("2050")
                 .departure(searchRequest.getDeparture())
