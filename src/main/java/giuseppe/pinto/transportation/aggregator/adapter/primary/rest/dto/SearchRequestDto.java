@@ -7,10 +7,11 @@ import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode
-@Builder
 @ToString
-public class TripDTO {
-
-    private final String identifier;
-
+@Builder
+public class SearchRequestDto {
+    private final String departure;
+    private final String arrival;
+    private final String departureDate;
+    private final String returnDate;
 }

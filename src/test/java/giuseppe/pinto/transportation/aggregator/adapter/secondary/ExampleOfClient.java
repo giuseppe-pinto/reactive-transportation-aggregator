@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary;
 
-import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDTO;
+import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -21,7 +21,7 @@ public class ExampleOfClient {
 
         webClient.post()
                 .uri("/aggregator/search")
-                .bodyValue(SearchRequestDTO.builder()
+                .bodyValue(SearchRequestDto.builder()
                         .departure("MIL")
                         .arrival("NAP")
                         .departureDate("2024-01-04")
@@ -39,7 +39,7 @@ public class ExampleOfClient {
 
         List block2 = webClient.post()
                 .uri("/aggregator/search")
-                .bodyValue(SearchRequestDTO.builder()
+                .bodyValue(SearchRequestDto.builder()
                         .departure("MIL")
                         .arrival("NAP")
                         .departureDate("2024-01-04")

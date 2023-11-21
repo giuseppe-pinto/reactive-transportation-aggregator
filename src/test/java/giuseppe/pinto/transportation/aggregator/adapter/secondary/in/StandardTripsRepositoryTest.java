@@ -1,6 +1,7 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
+import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.MultiTripReactiveDriverRepository;
@@ -30,23 +31,33 @@ class StandardTripsRepositoryTest {
     @Test
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
 
-        List<MultiTripReactiveDriverRepository> multiTripReactiveDriverRepository = List.of(
-                searchRequest -> Mono.just(List.of(createTripWith(searchRequest, BLUE))).delayElement(Duration.ofSeconds(1)),
-                searchRequest -> Mono.just(List.of(createTripWith(searchRequest, RED))).delayElement(Duration.ofSeconds(3))
-        );
+        StandardTripsRepository underTest = getStandardTripsRepository();
 
-
-        StandardTripsRepository underTest = new StandardTripsRepository(searchRequest -> multiTripReactiveDriverRepository);
-
-        Flux<List<Trip>> actualTrips = underTest.getListOfTrip(createSearchRequest());
+        Flux<DriverOutcome> actualTrips = underTest.getDriverOutcomeFrom(createSearchRequest());
 
         StepVerifier.create(actualTrips)
-                .expectNext(List.of(
-                        createTripWith(createSearchRequest(), BLUE)), List.of(createTripWith(createSearchRequest(), RED)))
+                .expectNext(
+                        DriverOutcome.builder().trips(List.of(createTripWith(createSearchRequest(), BLUE))).build(),
+                        DriverOutcome.builder().trips(List.of(createTripWith(createSearchRequest(), RED))).build())
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookMoreThan(Duration.ofSeconds(3));
 
+    }
+
+    private static StandardTripsRepository getStandardTripsRepository() {
+
+        List<MultiTripReactiveDriverRepository> multiTripReactiveDriverRepository = List.of(
+                searchRequest -> Mono.just(
+                        DriverOutcome.builder().trips(List.of(createTripWith(searchRequest, BLUE))).build()
+                ).delayElement(Duration.ofSeconds(1)),
+                searchRequest -> Mono.just(
+                        DriverOutcome.builder().trips(List.of(createTripWith(searchRequest, RED))).build()
+                ).delayElement(Duration.ofSeconds(3))
+        );
+
+
+        return new StandardTripsRepository(searchRequest -> multiTripReactiveDriverRepository);
     }
 
     private SearchRequest createSearchRequest() {

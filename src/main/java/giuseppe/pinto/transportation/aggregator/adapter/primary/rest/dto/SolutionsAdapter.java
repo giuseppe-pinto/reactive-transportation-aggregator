@@ -1,22 +1,21 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto;
 
+import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import reactor.core.publisher.Flux;
-import giuseppe.pinto.transportation.aggregator.domain.Trip;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.stream.Collectors;
 
-public class TripDTOAdapter {
+public class SolutionsAdapter {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
 
 
-    public Flux<List<TripDTO>> from(Flux<List<Trip>> trips){
+    public Flux<Solutions> from(Flux<DriverOutcome> trips){
 
         return trips
-                .map(listOfTrips -> listOfTrips.stream().map(trip ->  TripDTO.builder()
-                        .identifier(String.join( "|",
+                .map(driverOutcome -> Solutions.builder()
+                        .identifiers(driverOutcome.getTrips().stream().map(trip -> String.join( "|",
                                 trip.getDeparture(),
                                 trip.getArrival(),
                                 trip.getDepartureDate().format(formatter),
@@ -25,9 +24,8 @@ public class TripDTOAdapter {
                                 trip.getCarrierNumber(),
                                 trip.getPrice().toString(),
                                 trip.getCurrency().getCurrencyCode(),
-                                trip.getDriver().name()))
-                        .build()).collect(Collectors.toList()));
-
+                                trip.getDriver().name())).collect(Collectors.toList()))
+                        .build());
 
     }
 

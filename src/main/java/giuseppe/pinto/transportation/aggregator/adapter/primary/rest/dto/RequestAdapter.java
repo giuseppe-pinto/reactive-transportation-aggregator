@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class RequestAdapter {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public SearchRequest from(SearchRequestDTO searchRequestDTO){
+    public SearchRequest from(SearchRequestDto searchRequestDTO){
 
         return SearchRequest.builder()
                 .departure(searchRequestDTO.getDeparture())

@@ -1,8 +1,10 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
+import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.MultiTripReactiveDriverRepository;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -15,11 +17,13 @@ import java.util.Locale;
 
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.*;
 
+@Slf4j
 public class GreenDriverRepository implements MultiTripReactiveDriverRepository {
-    @Override
-    public Mono<List<Trip>> performRequest(SearchRequest searchRequest) {
 
-        System.out.println("Calling the provider: " + GREEN);
+
+    @Override
+    public Mono<DriverOutcome> performRequest(SearchRequest searchRequest) {
+        log.info("Calling the provider: " + GREEN);
 
         Trip trip = Trip.builder()
                 .driver(GREEN)
@@ -33,7 +37,7 @@ public class GreenDriverRepository implements MultiTripReactiveDriverRepository 
                 .currency(Currency.getInstance(Locale.ITALY))
                 .build();
 
-        return Mono.just(List.of(trip)).delayElement(Duration.ofSeconds(7));
+        return Mono.just(DriverOutcome.builder().trips(List.of(trip)).build()).delayElement(Duration.ofSeconds(7));
 
     }
 }

@@ -1,6 +1,7 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
+import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import org.junit.jupiter.api.Test;
@@ -28,10 +29,12 @@ class BlueDriverRepositoryTest {
 
         BlueDriverRepository underTest = new BlueDriverRepository();
 
-        Mono<List<Trip>> mono = underTest.performRequest(request());
+        Mono<DriverOutcome> mono = underTest.performRequest(request());
 
         StepVerifier.create(mono)
-                .expectNext(List.of(Trip.builder()
+                .expectNext(
+                        DriverOutcome.builder().trips(
+                        List.of(Trip.builder()
                         .driver(Driver.BLUE)
                         .carrier("GIUSEPPE_AIRLINE")
                         .carrierNumber("1000")
@@ -41,7 +44,7 @@ class BlueDriverRepositoryTest {
                         .arrivalDate(LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0))
                         .price(new BigDecimal("10.00"))
                         .currency(Currency.getInstance(Locale.ITALY))
-                        .build()))
+                        .build())).build())
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookMoreThan(Duration.ofSeconds(3));

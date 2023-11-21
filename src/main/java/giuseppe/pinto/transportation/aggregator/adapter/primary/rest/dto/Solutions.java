@@ -5,13 +5,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
+@Builder
 @EqualsAndHashCode
 @ToString
-@Builder
-public class SearchRequestDTO {
-    private final String departure;
-    private final String arrival;
-    private final String departureDate;
-    private final String returnDate;
+public class Solutions {
+    private final List<String> identifiers;
 }
