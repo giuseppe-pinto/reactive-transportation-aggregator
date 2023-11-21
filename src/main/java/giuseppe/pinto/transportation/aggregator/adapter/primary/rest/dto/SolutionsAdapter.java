@@ -11,11 +11,10 @@ public class SolutionsAdapter {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
 
 
-    public Flux<Solutions> from(Flux<DriverOutcome> trips){
+    public Flux<Solutions> from(Flux<DriverOutcome> driverOutcomes){
 
-        return trips
-                .map(driverOutcome -> Solutions.builder()
-                        .identifiers(driverOutcome.getTrips().stream().map(trip -> String.join( "|",
+        return driverOutcomes
+                .map(driverOutcome -> new Solutions(driverOutcome.getTrips().stream().map(trip -> String.join( "|",
                                 trip.getDeparture(),
                                 trip.getArrival(),
                                 trip.getDepartureDate().format(formatter),
@@ -24,8 +23,7 @@ public class SolutionsAdapter {
                                 trip.getCarrierNumber(),
                                 trip.getPrice().toString(),
                                 trip.getCurrency().getCurrencyCode(),
-                                trip.getDriver().name())).collect(Collectors.toList()))
-                        .build());
+                                trip.getDriver().name())).collect(Collectors.toList())));
 
     }
 
