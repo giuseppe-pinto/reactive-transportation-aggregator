@@ -3,6 +3,8 @@ package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import giuseppe.pinto.transportation.aggregator.bootstrap.configuration.TransportationAggregatorConfiguration;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -14,16 +16,22 @@ import reactor.test.StepVerifier;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration
 @ContextConfiguration(classes = TransportationAggregatorConfiguration.class)
+@Slf4j
 class TransportationAggregatorIntegrationTest {
-
-    public static final Solutions SOLUTIONS_FROM_BLUE_DRIVER = new Solutions(List.of("MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|GIUSEPPE_AIRLINE|1000|10.00|EUR|BLUE"));
-    public static final Solutions SOLUTIONS_FROM_RED_DRIVER = new Solutions(List.of("MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|PAOLO_AIRLINE|2000|60.00|EUR|RED",
+    private static final Solutions SOLUTIONS_FROM_BLUE_DRIVER = new Solutions(List.of(
+            "MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|GIUSEPPE_AIRLINE|1000|10.00|EUR|BLUE"));
+    private static final Solutions SOLUTIONS_FROM_RED_DRIVER = new Solutions(List.of(
+            "MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|PAOLO_AIRLINE|2000|60.00|EUR|RED",
             "MXP|NAP|2023-11-12:08-00|2023-11-13:08-00|MARIO_AIRLINE|2050|5.00|EUR|RED"));
-    public static final Solutions SOLUTIONS_FROM_GREEN_DRIVER = new Solutions(List.of("MXP|NAP|2023-11-12:16-00|2023-11-13:16-00|FRANCO_AIRLINE|3000|35.00|EUR|GREEN"));
+    private static final Solutions SOLUTIONS_FROM_GREEN_DRIVER = new Solutions(List.of(
+            "MXP|NAP|2023-11-12:16-00|2023-11-13:16-00|FRANCO_AIRLINE|3000|35.00|EUR|GREEN"));
+
     @Autowired
     private WebTestClient webTestClient;
 
@@ -40,18 +48,14 @@ class TransportationAggregatorIntegrationTest {
         StepVerifier.create(responseBody)
                 .expectSubscription()
                 .expectNext(SOLUTIONS_FROM_BLUE_DRIVER)
-                //.consumeNextWith(System.out::println)
                 .expectNext(SOLUTIONS_FROM_RED_DRIVER)
-                //.consumeNextWith(System.out::println)
                 .expectNext(SOLUTIONS_FROM_GREEN_DRIVER)
-                //.consumeNextWith(System.out::println)
                 .verifyComplete();
 
     }
 
     @Test
     void resultFromPostMethod() {
-
 
         SearchRequestDto searchRequestDto = SearchRequestDto.builder()
                 .departure("MXP")
@@ -72,13 +76,15 @@ class TransportationAggregatorIntegrationTest {
 
         StepVerifier.create(responseBody)
                 .expectSubscription()
-                .expectNext(SOLUTIONS_FROM_BLUE_DRIVER)
-                //.consumeNextWith(System.out::println)
-                .expectNext(SOLUTIONS_FROM_RED_DRIVER)
-                //.consumeNextWith(System.out::println)
-                .expectNext(SOLUTIONS_FROM_GREEN_DRIVER)
-                //.consumeNextWith(System.out::println)
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, SOLUTIONS_FROM_BLUE_DRIVER))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, SOLUTIONS_FROM_RED_DRIVER))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, SOLUTIONS_FROM_GREEN_DRIVER))
                 .verifyComplete();
 
+    }
+
+    private static void assertionAndLogOn(Solutions solutions, Solutions solutionsFromBlueDriver) {
+        assertThat(solutions).isEqualTo(solutionsFromBlueDriver);
+        log.info(solutions.toString());
     }
 }

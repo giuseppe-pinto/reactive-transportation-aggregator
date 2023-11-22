@@ -4,7 +4,7 @@ import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
 import reactor.core.publisher.Mono;
 
-public interface MultiTripReactiveDriverRepository {
+public interface DriverRepository {
 
     Mono<DriverOutcome> performRequest(SearchRequest searchRequest);
 
