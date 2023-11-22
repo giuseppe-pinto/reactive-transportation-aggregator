@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class SolutionsAdapter {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH-ss");
 
 
     public Flux<Solutions> from(Flux<DriverOutcome> driverOutcomes){

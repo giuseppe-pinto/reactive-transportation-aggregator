@@ -1,5 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller;
 
+import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import giuseppe.pinto.transportation.aggregator.bootstrap.configuration.TransportationAggregatorConfiguration;
 import org.junit.jupiter.api.Test;
@@ -19,19 +20,15 @@ import java.util.List;
 @ContextConfiguration(classes = TransportationAggregatorConfiguration.class)
 class TransportationAggregatorIntegrationTest {
 
+    public static final Solutions SOLUTIONS_FROM_BLUE_DRIVER = new Solutions(List.of("MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|GIUSEPPE_AIRLINE|1000|10.00|EUR|BLUE"));
+    public static final Solutions SOLUTIONS_FROM_RED_DRIVER = new Solutions(List.of("MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|PAOLO_AIRLINE|2000|60.00|EUR|RED",
+            "MXP|NAP|2023-11-12:08-00|2023-11-13:08-00|MARIO_AIRLINE|2050|5.00|EUR|RED"));
+    public static final Solutions SOLUTIONS_FROM_GREEN_DRIVER = new Solutions(List.of("MXP|NAP|2023-11-12:16-00|2023-11-13:16-00|FRANCO_AIRLINE|3000|35.00|EUR|GREEN"));
     @Autowired
     private WebTestClient webTestClient;
 
     @Test
-    void happyPath() {
-
-/*
-        webTestClient.get().uri("/aggregator/search")
-                .exchange()
-                .expectStatus().isOk()
-                .returnResult(Solutions.class)
-                .consumeWith(System.out::println);*/
-
+    void resultsFromGetMethod() {
 
         Flux<Solutions> responseBody = webTestClient.get().uri("/aggregator/search")
                 .exchange()
@@ -42,21 +39,46 @@ class TransportationAggregatorIntegrationTest {
 
         StepVerifier.create(responseBody)
                 .expectSubscription()
-                .expectNext(
-                        new Solutions(List.of("MIL|NAP|2023-Nov-12|2023-Nov-13|GIUSEPPE_AIRLINE|1000|10.00|EUR|BLUE")))
+                .expectNext(SOLUTIONS_FROM_BLUE_DRIVER)
                 //.consumeNextWith(System.out::println)
-                .expectNext(
-                        new Solutions(List.of("MIL|NAP|2023-Nov-12|2023-Nov-13|PAOLO_AIRLINE|2000|60.00|EUR|RED",
-                                "MIL|NAP|2023-Nov-12|2023-Nov-13|MARIO_AIRLINE|2050|5.00|EUR|RED")))
+                .expectNext(SOLUTIONS_FROM_RED_DRIVER)
                 //.consumeNextWith(System.out::println)
-                .expectNext(
-                        new Solutions(List.of("MIL|NAP|2023-Nov-12|2023-Nov-13|FRANCO_AIRLINE|3000|35.00|EUR|GREEN"))
-                )
+                .expectNext(SOLUTIONS_FROM_GREEN_DRIVER)
                 //.consumeNextWith(System.out::println)
                 .verifyComplete();
 
     }
 
+    @Test
+    void resultFromPostMethod() {
 
 
+        SearchRequestDto searchRequestDto = SearchRequestDto.builder()
+                .departure("MXP")
+                .arrival("NAP")
+                .departureDate("2023-10-12")
+                .returnDate("2023-10-13")
+                .build();
+
+        Flux<Solutions> responseBody = webTestClient
+                .post()
+                .uri("/aggregator/search")
+                .bodyValue(searchRequestDto)
+                .exchange()
+                .expectStatus().isOk()
+                .returnResult(Solutions.class)
+                .getResponseBody();
+
+
+        StepVerifier.create(responseBody)
+                .expectSubscription()
+                .expectNext(SOLUTIONS_FROM_BLUE_DRIVER)
+                //.consumeNextWith(System.out::println)
+                .expectNext(SOLUTIONS_FROM_RED_DRIVER)
+                //.consumeNextWith(System.out::println)
+                .expectNext(SOLUTIONS_FROM_GREEN_DRIVER)
+                //.consumeNextWith(System.out::println)
+                .verifyComplete();
+
+    }
 }
