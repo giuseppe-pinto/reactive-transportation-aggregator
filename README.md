@@ -9,8 +9,10 @@ Imagine that you need to create a backend system that sends transportation solut
 
 I opted to use Reactor from Spring and created a controller that responds with Flux objects. I also developed different providers/drivers (accessible through the DriverRepository interface) named BlueDriverRepository, GreenDriverRepository, and RedDriverRepository. Each one simulates a call to an external system. As you can imagine, different drivers may exhibit varying response times, and this characteristic is implemented individually in each driver. One of my objectives was to return every driver response to the caller without waiting for the slowest driver!
 
+You can run the app by starting up the Spring Boot application from the TransportationAggregatorApplication class. After starting the application, you can view the results by accessing the following GET endpoint using a simple browser: http://localhost:8080/aggregator/search.
 
+Last but not least I used the exagonal architectural pattern. 
 
-
+Enjoy it! 
 
 
