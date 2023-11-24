@@ -11,8 +11,11 @@ I opted to use Reactor from Spring and created a controller that responds with F
 
 You can run the app by starting up the Spring Boot application from the TransportationAggregatorApplication class. After starting the application, you can view the results by accessing the following GET endpoint using a simple browser: http://localhost:8080/aggregator/search.
 
-Last but not least I used the exagonal architectural pattern. 
+Last but not least I used the hexagonal architectural pattern. 
 
-Enjoy it! 
+Enjoy it!
 
+The following image describe a little bit the architecture of the aggregator.
+
+![image.png](image.png)
 
