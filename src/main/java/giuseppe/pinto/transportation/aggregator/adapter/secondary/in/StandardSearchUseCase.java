@@ -2,34 +2,32 @@ package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.RequestAdapter;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SolutionsAdapter;
-import giuseppe.pinto.transportation.aggregator.port.in.SearchTripsUseCase;
+import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
-import giuseppe.pinto.transportation.aggregator.port.in.TripsRepository;
+import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeRepository;
 import reactor.core.publisher.Flux;
 
-public class StandardSearchTripsUseCase implements SearchTripsUseCase {
+public class StandardSearchUseCase implements SearchUseCase {
 
     private final RequestAdapter requestAdapter;
     private final SolutionsAdapter solutionsAdapter;
-    private final TripsRepository tripsRepository;
+    private final DriverOutcomeRepository driverOutcomeRepository;
 
-    public StandardSearchTripsUseCase(TripsRepository tripsRepository,
-                                      SolutionsAdapter solutionsAdapter,
-                                      RequestAdapter requestAdapter) {
+    public StandardSearchUseCase(DriverOutcomeRepository driverOutcomeRepository,
+                                 SolutionsAdapter solutionsAdapter,
+                                 RequestAdapter requestAdapter) {
         this.requestAdapter = requestAdapter;
         this.solutionsAdapter = solutionsAdapter;
-        this.tripsRepository = tripsRepository;
+        this.driverOutcomeRepository = driverOutcomeRepository;
     }
 
     @Override
     public Flux<Solutions> searchOn(SearchRequestDto searchRequestDTO) {
         return solutionsAdapter.from(
-                tripsRepository.getDriverOutcomeFrom(
+                driverOutcomeRepository.from(
                         requestAdapter.from(searchRequestDTO)));
     }
-
-
 
 
 }

@@ -22,7 +22,7 @@ import java.util.Locale;
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.BLUE;
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.RED;
 
-class StandardTripsRepositoryTest {
+class StandardDriverOutcomeRepositoryTest {
 
 
     public static final String DEPARTURE = "MIL";
@@ -43,10 +43,10 @@ class StandardTripsRepositoryTest {
                         .build())
                     .delayElement(Duration.ofSeconds(3));
 
-        StandardTripsRepository underTest =
-                new StandardTripsRepository(searchRequest -> List.of(firstDriverRepository, secondDriverRepository));
+        StandardDriverOutcomeRepository underTest =
+                new StandardDriverOutcomeRepository(searchRequest -> List.of(firstDriverRepository, secondDriverRepository));
 
-        Flux<DriverOutcome> actualTrips = underTest.getDriverOutcomeFrom(createSearchRequest());
+        Flux<DriverOutcome> actualTrips = underTest.from(createSearchRequest());
 
         StepVerifier.create(actualTrips)
                 .expectNext(

@@ -1,7 +1,7 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller;
 
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
-import giuseppe.pinto.transportation.aggregator.port.in.SearchTripsUseCase;
+import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -10,15 +10,15 @@ import reactor.core.publisher.Flux;
 @RequestMapping(value = "/aggregator")
 public class TransportationAggregatorController {
 
-    private final SearchTripsUseCase searchTripsUseCase;
+    private final SearchUseCase searchUseCase;
 
-    public TransportationAggregatorController(SearchTripsUseCase searchTripsUseCase) {
-        this.searchTripsUseCase = searchTripsUseCase;
+    public TransportationAggregatorController(SearchUseCase searchUseCase) {
+        this.searchUseCase = searchUseCase;
     }
 
     @PostMapping("/search")
     public Flux<Solutions> search(@RequestBody SearchRequestDto searchRequest) {
-        return searchTripsUseCase.searchOn(searchRequest);
+        return searchUseCase.searchOn(searchRequest);
     }
 
     @GetMapping("/search")
@@ -31,7 +31,7 @@ public class TransportationAggregatorController {
                 .returnDate("2024-11-13")
                 .build();
 
-        return searchTripsUseCase.searchOn(searchRequest);
+        return searchUseCase.searchOn(searchRequest);
     }
 
 

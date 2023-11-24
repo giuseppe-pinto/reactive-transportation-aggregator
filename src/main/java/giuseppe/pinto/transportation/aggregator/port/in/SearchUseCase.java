@@ -4,7 +4,7 @@ import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchR
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import reactor.core.publisher.Flux;
 
-public interface SearchTripsUseCase {
+public interface SearchUseCase {
 
     Flux<Solutions> searchOn(SearchRequestDto searchRequestDTO);
 
