@@ -1,7 +1,7 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
 import org.slf4j.Logger;
@@ -23,14 +23,14 @@ public class GreenDriverRepository implements DriverRepository {
     private static final Logger log = LoggerFactory.getLogger(GreenDriverRepository.class);
 
     @Override
-    public Mono<DriverOutcome> performRequest(SearchRequest searchRequest) {
+    public Mono<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
         log.info("Calling the provider: " + GREEN);
 
 
         List<Trip> trips = List.of(
                 new Trip(
-                        searchRequest.departure(),
-                        searchRequest.arrival(),
+                        oneWaySearchRequest.departure(),
+                        oneWaySearchRequest.arrival(),
                         LocalDateTime.of(2023, Month.NOVEMBER, 12, 16, 0),
                         LocalDateTime.of(2023, Month.NOVEMBER, 13, 16, 0),
                         "3000",

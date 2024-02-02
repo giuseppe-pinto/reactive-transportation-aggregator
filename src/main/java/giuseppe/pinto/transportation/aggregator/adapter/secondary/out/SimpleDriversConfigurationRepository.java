@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
 
@@ -10,7 +10,7 @@ public class SimpleDriversConfigurationRepository implements DriverConfiguration
 
 
     @Override
-    public List<DriverRepository> getDriversFor(SearchRequest searchRequest) {
+    public List<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
 
         return List.of(
                 new BlueDriverRepository(),

@@ -1,7 +1,7 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
 import org.slf4j.Logger;
@@ -23,13 +23,13 @@ public class RedDriverRepository implements DriverRepository {
     private static final Logger log = LoggerFactory.getLogger(RedDriverRepository.class);
 
     @Override
-    public Mono<DriverOutcome> performRequest(SearchRequest searchRequest) {
+    public Mono<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
         log.info("Calling the provider: " + RED);
 
 
         Trip trip = new Trip(
-                searchRequest.departure(),
-                searchRequest.arrival(),
+                oneWaySearchRequest.departure(),
+                oneWaySearchRequest.arrival(),
                 LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
                 LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
                 "2000",
@@ -39,8 +39,8 @@ public class RedDriverRepository implements DriverRepository {
                 RED);
 
         Trip secondTrip = new Trip(
-                searchRequest.departure(),
-                searchRequest.arrival(),
+                oneWaySearchRequest.departure(),
+                oneWaySearchRequest.arrival(),
                 LocalDateTime.of(2023, Month.NOVEMBER, 12, 8, 0),
                 LocalDateTime.of(2023, Month.NOVEMBER, 13, 8, 0),
                 "2050",

@@ -2,7 +2,7 @@ package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
 import org.junit.jupiter.api.Test;
@@ -53,20 +53,20 @@ class StandardDriverOutcomeRepositoryTest {
 
     }
 
-    private SearchRequest createSearchRequest() {
+    private OneWaySearchRequest createSearchRequest() {
 
-        return new SearchRequest(DEPARTURE,
+        return new OneWaySearchRequest(DEPARTURE,
                 ARRIVAL,
-                LocalDate.now(),
-                LocalDate.now().plusDays(10));
+                LocalDate.now()
+        );
 
     }
 
 
-    private static Trip createTripWith(SearchRequest searchRequest, Driver driver) {
+    private static Trip createTripWith(OneWaySearchRequest oneWaySearchRequest, Driver driver) {
         return new Trip(
-                searchRequest.departure(),
-                searchRequest.arrival(),
+                oneWaySearchRequest.departure(),
+                oneWaySearchRequest.arrival(),
                 LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
                 LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
                 "1000",

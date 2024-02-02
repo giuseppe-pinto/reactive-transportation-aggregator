@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto;
 
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,12 +8,12 @@ import java.time.format.DateTimeFormatter;
 public class RequestAdapter {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public SearchRequest from(SearchRequestDto searchRequestDTO){
+    public OneWaySearchRequest from(SearchRequestDto searchRequestDTO){
 
-        return new SearchRequest(searchRequestDTO.departure(),
+        return new OneWaySearchRequest(searchRequestDTO.departure(),
                 searchRequestDTO.arrival(),
-                LocalDate.parse(searchRequestDTO.departureDate(), formatter),
-                LocalDate.parse(searchRequestDTO.returnDate(), formatter));
+                LocalDate.parse(searchRequestDTO.departureDate(), formatter)
+        );
 
     }
 

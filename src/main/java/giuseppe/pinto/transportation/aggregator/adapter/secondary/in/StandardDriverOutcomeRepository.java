@@ -1,7 +1,7 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
@@ -19,14 +19,14 @@ public class StandardDriverOutcomeRepository implements DriverOutcomeRepository 
     }
 
     @Override
-    public Flux<DriverOutcome> from(SearchRequest searchRequest) {
+    public Flux<DriverOutcome> from(OneWaySearchRequest oneWaySearchRequest) {
 
-        List<DriverRepository> drivers = driverConfigurationRepository.getDriversFor(searchRequest);
+        List<DriverRepository> drivers = driverConfigurationRepository.getDriversFor(oneWaySearchRequest);
 
         return Flux.merge(
                 drivers
                         .stream()
-                        .map(driver -> driver.performRequest(searchRequest))
+                        .map(driver -> driver.performRequest(oneWaySearchRequest))
                         .collect(Collectors.toList()));
     }
 

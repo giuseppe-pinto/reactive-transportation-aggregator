@@ -2,7 +2,7 @@ package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
-import giuseppe.pinto.transportation.aggregator.domain.SearchRequest;
+import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -67,12 +67,11 @@ class RedDriverRepositoryTest {
     }
 
 
-    private SearchRequest request() {
-        return new SearchRequest(
+    private OneWaySearchRequest request() {
+        return new OneWaySearchRequest(
                 DEPARTURE,
                 ARRIVAL,
-                LocalDate.now(),
-                LocalDate.now().plusDays(10)
+                LocalDate.now()
         );
     }
 
