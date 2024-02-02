@@ -6,7 +6,7 @@ import giuseppe.pinto.transportation.aggregator.port.out.BlockingDriverRepositor
 
 import java.util.List;
 
-public class SimpleDriversConfigurationRepository implements DriverConfigurationRepository {
+public class BlockingDriversConfigurationRepository implements DriverConfigurationRepository {
 
 
     @Override
