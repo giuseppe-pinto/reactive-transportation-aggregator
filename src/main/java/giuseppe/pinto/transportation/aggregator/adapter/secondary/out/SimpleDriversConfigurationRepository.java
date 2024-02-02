@@ -1,5 +1,8 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.BlueBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.GreenBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.RedBlockingDriverRepository;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.reactive.BlueReactiveDriverRepository;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.reactive.GreenReactiveDriverRepository;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
@@ -9,7 +12,7 @@ import giuseppe.pinto.transportation.aggregator.port.out.ReactiveDriverRepositor
 
 import java.util.List;
 
-public class BlockingDriversConfigurationRepository implements DriverConfigurationRepository {
+public class SimpleDriversConfigurationRepository implements DriverConfigurationRepository {
 
 
     @Override
