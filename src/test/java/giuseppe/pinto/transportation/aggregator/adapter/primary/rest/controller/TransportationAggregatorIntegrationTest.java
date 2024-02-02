@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller;
 
-import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
+import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.OneWaySearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import giuseppe.pinto.transportation.aggregator.bootstrap.configuration.TransportationAggregatorConfiguration;
 import org.junit.jupiter.api.Test;
@@ -57,14 +57,14 @@ class TransportationAggregatorIntegrationTest {
     @Test
     void resultFromPostMethod() {
 
-        SearchRequestDto searchRequestDto = new SearchRequestDto(
-                "MXP", "NAP", "2023-10-12", "2023-10-13");
+        OneWaySearchRequestDto oneWaySearchRequestDto = new OneWaySearchRequestDto(
+                "MXP", "NAP", "2023-10-12");
 
 
         Flux<Solutions> responseBody = webTestClient
                 .post()
                 .uri("/aggregator/search")
-                .bodyValue(searchRequestDto)
+                .bodyValue(oneWaySearchRequestDto)
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(Solutions.class)

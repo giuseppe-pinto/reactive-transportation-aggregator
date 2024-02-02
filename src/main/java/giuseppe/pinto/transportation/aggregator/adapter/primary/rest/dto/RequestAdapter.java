@@ -8,11 +8,11 @@ import java.time.format.DateTimeFormatter;
 public class RequestAdapter {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public OneWaySearchRequest from(SearchRequestDto searchRequestDTO){
+    public OneWaySearchRequest from(OneWaySearchRequestDto oneWaySearchRequestDTO){
 
-        return new OneWaySearchRequest(searchRequestDTO.departure(),
-                searchRequestDTO.arrival(),
-                LocalDate.parse(searchRequestDTO.departureDate(), formatter)
+        return new OneWaySearchRequest(oneWaySearchRequestDTO.departure(),
+                oneWaySearchRequestDTO.arrival(),
+                LocalDate.parse(oneWaySearchRequestDTO.departureDate(), formatter)
         );
 
     }

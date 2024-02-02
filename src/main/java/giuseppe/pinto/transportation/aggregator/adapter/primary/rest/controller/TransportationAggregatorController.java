@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller;
 
-import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
+import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.OneWaySearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +17,19 @@ public class TransportationAggregatorController {
     }
 
     @PostMapping("/search")
-    public Flux<Solutions> search(@RequestBody SearchRequestDto searchRequest) {
-        return searchUseCase.searchOn(searchRequest);
+    public Flux<Solutions> search(@RequestBody OneWaySearchRequestDto oneWaySearchRequestDto) {
+        return searchUseCase.searchOn(oneWaySearchRequestDto);
     }
 
     @GetMapping("/search")
     public Flux<Solutions> searchWithGet() {
 
-        SearchRequestDto searchRequest = new SearchRequestDto("MXP",
+        OneWaySearchRequestDto oneWaySearchRequestDto = new OneWaySearchRequestDto("MXP",
                 "NAP",
-                "2024-11-12",
-                "2024-11-13");
+                "2024-11-12"
+        );
 
-        return searchUseCase.searchOn(searchRequest);
+        return searchUseCase.searchOn(oneWaySearchRequestDto);
     }
 
 
