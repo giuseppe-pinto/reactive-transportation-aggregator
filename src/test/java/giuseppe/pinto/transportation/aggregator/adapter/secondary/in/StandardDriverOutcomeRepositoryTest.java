@@ -31,16 +31,11 @@ class StandardDriverOutcomeRepositoryTest {
     @Test
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
 
-        DriverRepository firstDriverRepository = searchRequest -> Mono.just(DriverOutcome
-                        .builder().
-                        trips(List.of(createTripWith(searchRequest, BLUE)))
-                        .build())
+        DriverRepository firstDriverRepository = searchRequest -> Mono.just(new DriverOutcome
+                        (List.of(createTripWith(searchRequest, BLUE))))
                 .delayElement(Duration.ofSeconds(1));
 
-        DriverRepository secondDriverRepository = searchRequest -> Mono.just(DriverOutcome
-                        .builder()
-                        .trips(List.of(createTripWith(searchRequest, RED)))
-                        .build())
+        DriverRepository secondDriverRepository = searchRequest -> Mono.just(new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
                     .delayElement(Duration.ofSeconds(3));
 
         StandardDriverOutcomeRepository underTest =
@@ -50,8 +45,8 @@ class StandardDriverOutcomeRepositoryTest {
 
         StepVerifier.create(actualTrips)
                 .expectNext(
-                        DriverOutcome.builder().trips(List.of(createTripWith(createSearchRequest(), BLUE))).build(),
-                        DriverOutcome.builder().trips(List.of(createTripWith(createSearchRequest(), RED))).build())
+                        new DriverOutcome(List.of(createTripWith(createSearchRequest(), BLUE))),
+                        new DriverOutcome(List.of(createTripWith(createSearchRequest(), RED))))
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookMoreThan(Duration.ofSeconds(3));
@@ -60,27 +55,24 @@ class StandardDriverOutcomeRepositoryTest {
 
     private SearchRequest createSearchRequest() {
 
-        return SearchRequest
-                .builder()
-                .departure(DEPARTURE)
-                .arrival(ARRIVAL)
-                .departureDate(LocalDate.now())
-                .build();
+        return new SearchRequest(DEPARTURE,
+                ARRIVAL,
+                LocalDate.now(),
+                LocalDate.now().plusDays(10));
 
     }
 
 
     private static Trip createTripWith(SearchRequest searchRequest, Driver driver) {
-        return Trip.builder()
-                .driver(driver)
-                .carrier("AIRLINE")
-                .carrierNumber("1000")
-                .departure(searchRequest.getDeparture())
-                .arrival(searchRequest.getArrival())
-                .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0))
-                .arrivalDate(LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0))
-                .price(new BigDecimal("10.00"))
-                .currency(Currency.getInstance(Locale.ITALY))
-                .build();
+        return new Trip(
+                searchRequest.departure(),
+                searchRequest.arrival(),
+                LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
+                LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
+                "1000",
+                "AIRLINE",
+                new BigDecimal("10.00"),
+                Currency.getInstance(Locale.ITALY),
+                driver);
     }
 }

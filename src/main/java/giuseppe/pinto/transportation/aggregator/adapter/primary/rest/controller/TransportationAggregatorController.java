@@ -24,12 +24,10 @@ public class TransportationAggregatorController {
     @GetMapping("/search")
     public Flux<Solutions> searchWithGet() {
 
-        SearchRequestDto searchRequest = SearchRequestDto.builder()
-                .departure("MXP")
-                .arrival("NAP")
-                .departureDate("2024-11-12")
-                .returnDate("2024-11-13")
-                .build();
+        SearchRequestDto searchRequest = new SearchRequestDto("MXP",
+                "NAP",
+                "2024-11-12",
+                "2024-11-13");
 
         return searchUseCase.searchOn(searchRequest);
     }

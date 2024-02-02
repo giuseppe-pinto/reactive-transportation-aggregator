@@ -30,32 +30,36 @@ class RedDriverRepositoryTest {
 
         Mono<DriverOutcome> mono = underTest.performRequest(request());
 
+
+        Trip firstTrip = new Trip(
+                DEPARTURE,
+                ARRIVAL,
+                LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
+                LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
+                "2000",
+                "PAOLO_AIRLINE",
+                new BigDecimal("60.00"),
+                Currency.getInstance(Locale.ITALY),
+                Driver.RED
+        );
+
+        Trip secondTrip = new Trip(
+                DEPARTURE,
+                ARRIVAL,
+                LocalDateTime.of(2023, Month.NOVEMBER, 12, 8, 0),
+                LocalDateTime.of(2023, Month.NOVEMBER, 13, 8, 0),
+                "2050",
+                "MARIO_AIRLINE",
+                new BigDecimal("5.00"),
+                Currency.getInstance(Locale.ITALY),
+                Driver.RED
+        );
+
+
         StepVerifier.create(mono)
                 .expectNext(
-                        DriverOutcome.builder().trips(
-                        List.of(Trip.builder()
-                        .driver(Driver.RED)
-                        .carrier("PAOLO_AIRLINE")
-                        .carrierNumber("2000")
-                        .departure(DEPARTURE)
-                        .arrival(ARRIVAL)
-                        .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0))
-                        .arrivalDate(LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0))
-                        .price(new BigDecimal("60.00"))
-                        .currency(Currency.getInstance(Locale.ITALY))
-                        .build(),
-                        Trip.builder()
-                                .driver(Driver.RED)
-                                .carrier("MARIO_AIRLINE")
-                                .carrierNumber("2050")
-                                .departure(DEPARTURE)
-                                .arrival(ARRIVAL)
-                                .departureDate(LocalDateTime.of(2023, Month.NOVEMBER, 12, 8, 0))
-                                .arrivalDate(LocalDateTime.of(2023, Month.NOVEMBER, 13, 8, 0))
-                                .price(new BigDecimal("5.00"))
-                                .currency(Currency.getInstance(Locale.ITALY))
-                                .build()
-                        )).build())
+                        new DriverOutcome(
+                        List.of(firstTrip,secondTrip)))
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookMoreThan(Duration.ofSeconds(5));
@@ -64,12 +68,12 @@ class RedDriverRepositoryTest {
 
 
     private SearchRequest request() {
-        return SearchRequest
-                .builder()
-                .departure(DEPARTURE)
-                .arrival(ARRIVAL)
-                .departureDate(LocalDate.now())
-                .build();
+        return new SearchRequest(
+                DEPARTURE,
+                ARRIVAL,
+                LocalDate.now(),
+                LocalDate.now().plusDays(10)
+        );
     }
 
 }

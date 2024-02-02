@@ -14,16 +14,16 @@ public class SolutionsAdapter {
     public Flux<Solutions> from(Flux<DriverOutcome> driverOutcomes){
 
         return driverOutcomes
-                .map(driverOutcome -> new Solutions(driverOutcome.getTrips().stream().map(trip -> String.join( "|",
-                                trip.getDeparture(),
-                                trip.getArrival(),
-                                trip.getDepartureDate().format(formatter),
-                                trip.getArrivalDate().format(formatter),
-                                trip.getCarrier(),
-                                trip.getCarrierNumber(),
-                                trip.getPrice().toString(),
-                                trip.getCurrency().getCurrencyCode(),
-                                trip.getDriver().name())).collect(Collectors.toList())));
+                .map(driverOutcome -> new Solutions(driverOutcome.trips().stream().map(trip -> String.join( "|",
+                                trip.departure(),
+                                trip.arrival(),
+                                trip.departureDate().format(formatter),
+                                trip.arrivalDate().format(formatter),
+                                trip.carrier(),
+                                trip.carrierNumber(),
+                                trip.price().toString(),
+                                trip.currency().getCurrencyCode(),
+                                trip.driver().name())).collect(Collectors.toList())));
 
     }
 

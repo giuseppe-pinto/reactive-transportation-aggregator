@@ -3,9 +3,9 @@ package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import giuseppe.pinto.transportation.aggregator.bootstrap.configuration.TransportationAggregatorConfiguration;
-import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.logging.Logger;
+import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,14 +16,14 @@ import reactor.test.StepVerifier;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration
 @ContextConfiguration(classes = TransportationAggregatorConfiguration.class)
-@Slf4j
 class TransportationAggregatorIntegrationTest {
+    private static final Logger log = LoggerFactory.getLogger(TransportationAggregatorIntegrationTest.class);
     private static final Solutions SOLUTIONS_FROM_BLUE_DRIVER = new Solutions(List.of(
             "MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|GIUSEPPE_AIRLINE|1000|10.00|EUR|BLUE"));
     private static final Solutions SOLUTIONS_FROM_RED_DRIVER = new Solutions(List.of(
@@ -57,12 +57,9 @@ class TransportationAggregatorIntegrationTest {
     @Test
     void resultFromPostMethod() {
 
-        SearchRequestDto searchRequestDto = SearchRequestDto.builder()
-                .departure("MXP")
-                .arrival("NAP")
-                .departureDate("2023-10-12")
-                .returnDate("2023-10-13")
-                .build();
+        SearchRequestDto searchRequestDto = new SearchRequestDto(
+                "MXP", "NAP", "2023-10-12", "2023-10-13");
+
 
         Flux<Solutions> responseBody = webTestClient
                 .post()
@@ -85,6 +82,6 @@ class TransportationAggregatorIntegrationTest {
 
     private static void assertionAndLogOn(Solutions solutions, Solutions solutionsFromBlueDriver) {
         assertThat(solutions).isEqualTo(solutionsFromBlueDriver);
-        log.info(solutions.toString());
+        log.info(solutions::toString);
     }
 }

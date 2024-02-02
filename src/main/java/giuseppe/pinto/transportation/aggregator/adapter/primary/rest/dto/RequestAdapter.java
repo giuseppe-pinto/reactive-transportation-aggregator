@@ -10,12 +10,11 @@ public class RequestAdapter {
 
     public SearchRequest from(SearchRequestDto searchRequestDTO){
 
-        return SearchRequest.builder()
-                .departure(searchRequestDTO.getDeparture())
-                .arrival(searchRequestDTO.getArrival())
-                .departureDate(LocalDate.parse(searchRequestDTO.getDepartureDate(), formatter))
-                .returnDate(LocalDate.parse(searchRequestDTO.getReturnDate(), formatter))
-                .build();
+        return new SearchRequest(searchRequestDTO.departure(),
+                searchRequestDTO.arrival(),
+                LocalDate.parse(searchRequestDTO.departureDate(), formatter),
+                LocalDate.parse(searchRequestDTO.returnDate(), formatter));
+
     }
 
 }
