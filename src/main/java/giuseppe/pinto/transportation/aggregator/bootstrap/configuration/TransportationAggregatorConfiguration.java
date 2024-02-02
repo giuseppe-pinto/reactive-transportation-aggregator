@@ -5,7 +5,7 @@ import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Request
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SolutionsAdapter;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardSearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardDriverOutcomeRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.mono.BlockingDriversConfigurationRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.BlockingDriversConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
@@ -24,7 +24,7 @@ public class TransportationAggregatorConfiguration {
 
     @Bean
     public DriverOutcomeRepository tripsRepository(DriverConfigurationRepository driverConfigurationRepository){
-        return new StandardDriverOutcomeRepository(driverConfigurationRepository);
+        return new StandardDriverOutcomeRepository(driverConfigurationRepository, false);
     }
 
     @Bean

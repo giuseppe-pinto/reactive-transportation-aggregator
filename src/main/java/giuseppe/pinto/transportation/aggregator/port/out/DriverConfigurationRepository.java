@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DriverConfigurationRepository {
     List<BlockingDriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest);
+    List<ReactiveDriverRepository> getReactiveDriversFor(OneWaySearchRequest oneWaySearchRequest);
 }

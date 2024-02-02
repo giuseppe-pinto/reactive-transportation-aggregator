@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.mono.RedBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.RedBlockingDriverRepository;
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;

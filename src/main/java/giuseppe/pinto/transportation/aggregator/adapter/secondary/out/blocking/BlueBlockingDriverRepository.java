@@ -1,4 +1,4 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.mono;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
