@@ -5,7 +5,7 @@ import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Request
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SolutionsAdapter;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardSearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardDriverOutcomeRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.SimpleDriversConfigurationRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.mono.SimpleDriversConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;

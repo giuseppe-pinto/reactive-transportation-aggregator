@@ -1,5 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.mono.RedBlockingDriverRepository;
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
@@ -17,7 +18,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-class RedDriverRepositoryTest {
+class RedBlockingDriverRepositoryTest {
 
 
     private static final String DEPARTURE = "LIN";
@@ -26,7 +27,7 @@ class RedDriverRepositoryTest {
     @Test
     void theSecondDriverRespondsIn5Seconds() {
 
-        RedDriverRepository underTest = new RedDriverRepository();
+        RedBlockingDriverRepository underTest = new RedBlockingDriverRepository();
 
         Mono<DriverOutcome> mono = underTest.performRequest(request());
 

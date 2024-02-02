@@ -5,5 +5,5 @@ import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import java.util.List;
 
 public interface DriverConfigurationRepository {
-    List<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest);
+    List<BlockingDriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest);
 }

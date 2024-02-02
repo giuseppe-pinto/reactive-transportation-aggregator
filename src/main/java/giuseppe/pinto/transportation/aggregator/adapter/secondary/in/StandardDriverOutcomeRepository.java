@@ -4,7 +4,7 @@ import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.BlockingDriverRepository;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class StandardDriverOutcomeRepository implements DriverOutcomeRepository 
     @Override
     public Flux<DriverOutcome> from(OneWaySearchRequest oneWaySearchRequest) {
 
-        List<DriverRepository> drivers = driverConfigurationRepository.getDriversFor(oneWaySearchRequest);
+        List<BlockingDriverRepository> drivers = driverConfigurationRepository.getDriversFor(oneWaySearchRequest);
 
         return Flux.merge(
                 drivers

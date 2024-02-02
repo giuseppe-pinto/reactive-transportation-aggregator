@@ -4,7 +4,7 @@ import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.BlockingDriverRepository;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -31,15 +31,15 @@ class StandardDriverOutcomeRepositoryTest {
     @Test
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
 
-        DriverRepository firstDriverRepository = searchRequest -> Mono.just(new DriverOutcome
+        BlockingDriverRepository firstBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome
                         (List.of(createTripWith(searchRequest, BLUE))))
                 .delayElement(Duration.ofSeconds(1));
 
-        DriverRepository secondDriverRepository = searchRequest -> Mono.just(new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
+        BlockingDriverRepository secondBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
                     .delayElement(Duration.ofSeconds(3));
 
         StandardDriverOutcomeRepository underTest =
-                new StandardDriverOutcomeRepository(searchRequest -> List.of(firstDriverRepository, secondDriverRepository));
+                new StandardDriverOutcomeRepository(searchRequest -> List.of(firstBlockingDriverRepository, secondBlockingDriverRepository));
 
         Flux<DriverOutcome> actualTrips = underTest.from(createSearchRequest());
 
