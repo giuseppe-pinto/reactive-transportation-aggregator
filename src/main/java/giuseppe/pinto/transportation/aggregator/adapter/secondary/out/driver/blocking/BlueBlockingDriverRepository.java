@@ -1,9 +1,9 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -33,7 +33,7 @@ public class BlueBlockingDriverRepository implements DriverRepository {
                 LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
                 LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
                 "1000",
-                "GIUSEPPE_AIRLINE",
+                "FIRST_BLUE_AIRLINE",
                 new BigDecimal("10.00"),
                 Currency.getInstance(Locale.ITALY),
                 BLUE));

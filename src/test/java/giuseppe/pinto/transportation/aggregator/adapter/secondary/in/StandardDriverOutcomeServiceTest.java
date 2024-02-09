@@ -5,16 +5,14 @@ import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Currency;
 import java.util.List;
@@ -25,9 +23,9 @@ import static giuseppe.pinto.transportation.aggregator.domain.Driver.RED;
 
 class StandardDriverOutcomeServiceTest {
 
-
-    public static final String DEPARTURE = "MIL";
-    public static final String ARRIVAL = "NAP";
+    private static final String DEPARTURE = "MIL";
+    private static final String ARRIVAL = "NAP";
+    private static final LocalDate DEPARTURE_DATE = LocalDate.of(2023, Month.NOVEMBER, 12);
 
     @Test
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
@@ -38,9 +36,8 @@ class StandardDriverOutcomeServiceTest {
         Flux<DriverOutcome> actualTrips = underTest.from(createSearchRequest());
 
         StepVerifier.create(actualTrips)
-                .expectNext(
-                        new DriverOutcome(List.of(createTripWith(createSearchRequest(), BLUE))),
-                        new DriverOutcome(List.of(createTripWith(createSearchRequest(), RED))))
+                .expectNext(new DriverOutcome(List.of(createTripWith(createSearchRequest(), BLUE))))
+                .expectNext(new DriverOutcome(List.of(createTripWith(createSearchRequest(), RED))))
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookMoreThan(Duration.ofSeconds(3));
@@ -53,14 +50,15 @@ class StandardDriverOutcomeServiceTest {
         @Override
         public List<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
 
-            DriverRepository firstBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome
-                            (List.of(createTripWith(searchRequest, BLUE))))
-                    .delayElement(Duration.ofSeconds(1));
+            DriverRepository firstDriverRepository = searchRequest -> Flux.just(
+                    new DriverOutcome(List.of(createTripWith(searchRequest, BLUE))))
+                    .delayElements(Duration.ofSeconds(1));
 
-            DriverRepository secondBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
-                    .delayElement(Duration.ofSeconds(3));
+            DriverRepository secondDriverRepository = searchRequest -> Flux.just(
+                    new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
+                    .delayElements(Duration.ofSeconds(3));
 
-            return List.of(firstBlockingDriverRepository, secondBlockingDriverRepository);
+            return List.of(firstDriverRepository, secondDriverRepository);
         }
 
 
@@ -70,7 +68,7 @@ class StandardDriverOutcomeServiceTest {
 
         return new OneWaySearchRequest(DEPARTURE,
                 ARRIVAL,
-                LocalDate.now()
+                DEPARTURE_DATE
         );
 
     }
@@ -80,8 +78,8 @@ class StandardDriverOutcomeServiceTest {
         return new Trip(
                 oneWaySearchRequest.departure(),
                 oneWaySearchRequest.arrival(),
-                LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
-                LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
+                DEPARTURE_DATE.atTime( 10, 0),
+                DEPARTURE_DATE.atTime( 12, 0),
                 "1000",
                 "AIRLINE",
                 new BigDecimal("10.00"),

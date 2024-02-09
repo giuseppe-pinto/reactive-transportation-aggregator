@@ -4,6 +4,7 @@ import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeService;
 import giuseppe.pinto.transportation.aggregator.port.out.*;
+import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
 import reactor.core.publisher.Flux;
 
 import java.util.List;

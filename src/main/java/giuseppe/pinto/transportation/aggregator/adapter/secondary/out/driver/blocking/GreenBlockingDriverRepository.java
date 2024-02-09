@@ -1,9 +1,9 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -34,7 +34,7 @@ public class GreenBlockingDriverRepository implements DriverRepository {
                         LocalDateTime.of(2023, Month.NOVEMBER, 12, 16, 0),
                         LocalDateTime.of(2023, Month.NOVEMBER, 13, 16, 0),
                         "3000",
-                        "FRANCO_AIRLINE",
+                        "FIRST_GREEN_AIRLINE",
                         new BigDecimal("35.00"),
                         Currency.getInstance(Locale.ITALY),
                         GREEN

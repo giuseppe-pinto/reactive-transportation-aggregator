@@ -1,17 +1,15 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
 
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -30,10 +28,10 @@ public class RedBlockingDriverRepository implements DriverRepository {
         Trip trip = new Trip(
                 oneWaySearchRequest.departure(),
                 oneWaySearchRequest.arrival(),
-                LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
-                LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
+                oneWaySearchRequest.departureDate().atTime( 10, 0),
+                oneWaySearchRequest.departureDate().atTime( 12, 0),
                 "2000",
-                "PAOLO_AIRLINE",
+                "FIRST_RED_AIRLINE",
                 new BigDecimal("60.00"),
                 Currency.getInstance(Locale.ITALY),
                 RED);
@@ -41,10 +39,10 @@ public class RedBlockingDriverRepository implements DriverRepository {
         Trip secondTrip = new Trip(
                 oneWaySearchRequest.departure(),
                 oneWaySearchRequest.arrival(),
-                LocalDateTime.of(2023, Month.NOVEMBER, 12, 8, 0),
-                LocalDateTime.of(2023, Month.NOVEMBER, 13, 8, 0),
-                "2050",
-                "MARIO_AIRLINE",
+                oneWaySearchRequest.departureDate().atTime( 10, 0),
+                oneWaySearchRequest.departureDate().atTime( 12, 0),
+                "2001",
+                "SECOND_RED_AIRLINE",
                 new BigDecimal("5.00"),
                 Currency.getInstance(Locale.ITALY),
                 RED);

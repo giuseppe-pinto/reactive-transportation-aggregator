@@ -58,8 +58,8 @@ class TransportationAggregatorIntegrationTest {
 
     }
 
-    private static void assertionAndLogOn(Solutions solutions, Solutions solutionsFromBlueDriver) {
-        assertThat(solutions).isEqualTo(solutionsFromBlueDriver);
-        log.info(solutions::toString);
+    private static void assertionAndLogOn(Solutions actualSolutions, Solutions expectedSolutions) {
+        assertThat(actualSolutions).isEqualTo(expectedSolutions);
+        log.info(actualSolutions::toString);
     }
 }

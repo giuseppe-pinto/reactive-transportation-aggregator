@@ -1,13 +1,13 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.BlueBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.GreenBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.RedBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.reactive.BlueReactiveDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.reactive.GreenReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.BlueBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.GreenBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.RedBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive.BlueReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive.GreenReactiveDriverRepository;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
 
 import java.util.List;
 

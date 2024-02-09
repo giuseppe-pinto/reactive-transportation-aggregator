@@ -1,6 +1,6 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking.RedBlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.RedBlockingDriverRepository;
 import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
@@ -12,7 +12,6 @@ import reactor.test.StepVerifier;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Currency;
 import java.util.List;
@@ -23,47 +22,45 @@ class RedBlockingDriverRepositoryTest {
 
     private static final String DEPARTURE = "LIN";
     private static final String ARRIVAL = "NAP";
+    private static final LocalDate DEPARTURE_DATE =
+            LocalDate.of(2023, Month.NOVEMBER, 12);
 
     @Test
-    void theSecondDriverRespondsIn5Seconds() {
+    void driverRespondsIn5Seconds() {
 
         RedBlockingDriverRepository underTest = new RedBlockingDriverRepository();
 
-        Mono<DriverOutcome> mono = underTest.performRequest(request());
+        Mono<DriverOutcome> performed = underTest.performRequest(request());
 
 
-        Trip firstTrip = new Trip(
+        DriverOutcome providerResult = new DriverOutcome(List.of(new Trip(
                 DEPARTURE,
                 ARRIVAL,
-                LocalDateTime.of(2023, Month.NOVEMBER, 12, 10, 0),
-                LocalDateTime.of(2023, Month.NOVEMBER, 13, 10, 0),
+                DEPARTURE_DATE.atTime(10, 0),
+                DEPARTURE_DATE.atTime(12, 0),
                 "2000",
-                "PAOLO_AIRLINE",
+                "FIRST_RED_AIRLINE",
                 new BigDecimal("60.00"),
                 Currency.getInstance(Locale.ITALY),
                 Driver.RED
-        );
-
-        Trip secondTrip = new Trip(
+        ), new Trip(
                 DEPARTURE,
                 ARRIVAL,
-                LocalDateTime.of(2023, Month.NOVEMBER, 12, 8, 0),
-                LocalDateTime.of(2023, Month.NOVEMBER, 13, 8, 0),
-                "2050",
-                "MARIO_AIRLINE",
+                DEPARTURE_DATE.atTime(10, 0),
+                DEPARTURE_DATE.atTime(12, 0),
+                "2001",
+                "SECOND_RED_AIRLINE",
                 new BigDecimal("5.00"),
                 Currency.getInstance(Locale.ITALY),
                 Driver.RED
-        );
+        )));
 
 
-        StepVerifier.create(mono)
-                .expectNext(
-                        new DriverOutcome(
-                        List.of(firstTrip,secondTrip)))
+        StepVerifier.create(performed)
+                .expectNext(providerResult)
                 .expectComplete()
                 .verifyThenAssertThat()
-                .tookMoreThan(Duration.ofSeconds(5));
+                .tookLessThan(Duration.ofSeconds(6));
 
     }
 
@@ -72,7 +69,7 @@ class RedBlockingDriverRepositoryTest {
         return new OneWaySearchRequest(
                 DEPARTURE,
                 ARRIVAL,
-                LocalDate.now()
+                DEPARTURE_DATE
         );
     }
 
