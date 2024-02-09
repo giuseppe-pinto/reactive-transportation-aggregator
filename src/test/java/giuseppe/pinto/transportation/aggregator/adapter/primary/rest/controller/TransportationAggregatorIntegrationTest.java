@@ -1,6 +1,5 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.controller;
 
-import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.OneWaySearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
 import giuseppe.pinto.transportation.aggregator.bootstrap.configuration.TransportationAggregatorConfiguration;
 import org.junit.jupiter.api.Test;
@@ -24,13 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(classes = TransportationAggregatorConfiguration.class)
 class TransportationAggregatorIntegrationTest {
     private static final Logger log = LoggerFactory.getLogger(TransportationAggregatorIntegrationTest.class);
-    private static final Solutions SOLUTIONS_FROM_BLUE_DRIVER = new Solutions(List.of(
-            "MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|GIUSEPPE_AIRLINE|1000|10.00|EUR|BLUE"));
-    private static final Solutions SOLUTIONS_FROM_RED_DRIVER = new Solutions(List.of(
-            "MXP|NAP|2023-11-12:10-00|2023-11-13:10-00|PAOLO_AIRLINE|2000|60.00|EUR|RED",
-            "MXP|NAP|2023-11-12:08-00|2023-11-13:08-00|MARIO_AIRLINE|2050|5.00|EUR|RED"));
-    private static final Solutions SOLUTIONS_FROM_GREEN_DRIVER = new Solutions(List.of(
-            "MXP|NAP|2023-11-12:16-00|2023-11-13:16-00|FRANCO_AIRLINE|3000|35.00|EUR|GREEN"));
 
     @Autowired
     private WebTestClient webTestClient;
@@ -38,7 +30,7 @@ class TransportationAggregatorIntegrationTest {
     @Test
     void resultsFromGetMethod() {
 
-        Flux<Solutions> responseBody = webTestClient.get().uri("/aggregator/search")
+        Flux<Solutions> responseBody = webTestClient.get().uri("/aggregator/search?departure=MXP&arrival=NAP&departureDate=2024-11-12")
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(Solutions.class)
@@ -47,35 +39,21 @@ class TransportationAggregatorIntegrationTest {
 
         StepVerifier.create(responseBody)
                 .expectSubscription()
-                .expectNext(SOLUTIONS_FROM_BLUE_DRIVER)
-                .expectNext(SOLUTIONS_FROM_RED_DRIVER)
-                .expectNext(SOLUTIONS_FROM_GREEN_DRIVER)
-                .verifyComplete();
-
-    }
-
-    @Test
-    void resultFromPostMethod() {
-
-        OneWaySearchRequestDto oneWaySearchRequestDto = new OneWaySearchRequestDto(
-                "MXP", "NAP", "2023-10-12");
-
-
-        Flux<Solutions> responseBody = webTestClient
-                .post()
-                .uri("/aggregator/search")
-                .bodyValue(oneWaySearchRequestDto)
-                .exchange()
-                .expectStatus().isOk()
-                .returnResult(Solutions.class)
-                .getResponseBody();
-
-
-        StepVerifier.create(responseBody)
-                .expectSubscription()
-                .consumeNextWith(solutions -> assertionAndLogOn(solutions, SOLUTIONS_FROM_BLUE_DRIVER))
-                .consumeNextWith(solutions -> assertionAndLogOn(solutions, SOLUTIONS_FROM_RED_DRIVER))
-                .consumeNextWith(solutions -> assertionAndLogOn(solutions, SOLUTIONS_FROM_GREEN_DRIVER))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|GREEN_FIRST_AIRLINE|1000|100.00|EUR|GREEN"))))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_FIRST_AIRLINE|1000|35.00|EUR|BLUE",
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_FIRST_AIRLINE|1001|35.00|EUR|BLUE"))))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|GREEN_SECOND_AIRLINE|2000|135.00|EUR|GREEN"))))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|GREEN_THIRD_AIRLINE|3000|325.00|EUR|GREEN"))))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_SECOND_AIRLINE|2000|35.00|EUR|BLUE"))))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_THIRD_AIRLINE|3001|35.00|EUR|BLUE",
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_THIRD_AIRLINE|3002|35.00|EUR|BLUE",
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_THIRD_AIRLINE|3003|35.00|EUR|BLUE"))))
                 .verifyComplete();
 
     }

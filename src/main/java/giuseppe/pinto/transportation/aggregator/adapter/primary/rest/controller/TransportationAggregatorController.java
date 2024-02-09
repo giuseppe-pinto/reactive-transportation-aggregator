@@ -16,17 +16,15 @@ public class TransportationAggregatorController {
         this.searchUseCase = searchUseCase;
     }
 
-    @PostMapping("/search")
-    public Flux<Solutions> search(@RequestBody OneWaySearchRequestDto oneWaySearchRequestDto) {
-        return searchUseCase.searchOn(oneWaySearchRequestDto);
-    }
-
     @GetMapping("/search")
-    public Flux<Solutions> searchWithGet() {
+    public Flux<Solutions> search(@RequestParam String departure,
+                                  @RequestParam String arrival,
+                                  @RequestParam String departureDate) {
 
-        OneWaySearchRequestDto oneWaySearchRequestDto = new OneWaySearchRequestDto("MXP",
-                "NAP",
-                "2024-11-12"
+        OneWaySearchRequestDto oneWaySearchRequestDto = new OneWaySearchRequestDto(
+                departure,
+                arrival,
+                departureDate//"2024-11-12"
         );
 
         return searchUseCase.searchOn(oneWaySearchRequestDto);

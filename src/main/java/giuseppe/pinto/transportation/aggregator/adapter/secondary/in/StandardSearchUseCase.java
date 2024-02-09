@@ -5,27 +5,27 @@ import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutio
 import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.OneWaySearchRequestDto;
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Solutions;
-import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeRepository;
+import giuseppe.pinto.transportation.aggregator.port.in.DriverOutcomeService;
 import reactor.core.publisher.Flux;
 
 public class StandardSearchUseCase implements SearchUseCase {
 
     private final RequestAdapter requestAdapter;
     private final SolutionsAdapter solutionsAdapter;
-    private final DriverOutcomeRepository driverOutcomeRepository;
+    private final DriverOutcomeService driverOutcomeService;
 
-    public StandardSearchUseCase(DriverOutcomeRepository driverOutcomeRepository,
+    public StandardSearchUseCase(DriverOutcomeService driverOutcomeService,
                                  SolutionsAdapter solutionsAdapter,
                                  RequestAdapter requestAdapter) {
         this.requestAdapter = requestAdapter;
         this.solutionsAdapter = solutionsAdapter;
-        this.driverOutcomeRepository = driverOutcomeRepository;
+        this.driverOutcomeService = driverOutcomeService;
     }
 
     @Override
     public Flux<Solutions> searchOn(OneWaySearchRequestDto oneWaySearchRequestDTO) {
         return solutionsAdapter.from(
-                driverOutcomeRepository.from(
+                driverOutcomeService.from(
                         requestAdapter.from(oneWaySearchRequestDTO)));
     }
 

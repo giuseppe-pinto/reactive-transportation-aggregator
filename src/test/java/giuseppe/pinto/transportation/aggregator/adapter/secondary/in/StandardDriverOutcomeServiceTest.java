@@ -4,9 +4,8 @@ import giuseppe.pinto.transportation.aggregator.domain.Driver;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.BlockingDriverRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.ReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,7 @@ import java.util.Locale;
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.BLUE;
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.RED;
 
-class StandardDriverOutcomeRepositoryTest {
+class StandardDriverOutcomeServiceTest {
 
 
     public static final String DEPARTURE = "MIL";
@@ -33,8 +32,8 @@ class StandardDriverOutcomeRepositoryTest {
     @Test
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
 
-        StandardDriverOutcomeRepository underTest =
-                new StandardDriverOutcomeRepository(new FakeDriverConfigurationRepository(), false);
+        StandardDriverOutcomeService underTest =
+                new StandardDriverOutcomeService(new FakeDriverConfigurationRepository());
 
         Flux<DriverOutcome> actualTrips = underTest.from(createSearchRequest());
 
@@ -52,22 +51,18 @@ class StandardDriverOutcomeRepositoryTest {
 
 
         @Override
-        public List<BlockingDriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
+        public List<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
 
-            BlockingDriverRepository firstBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome
+            DriverRepository firstBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome
                             (List.of(createTripWith(searchRequest, BLUE))))
                     .delayElement(Duration.ofSeconds(1));
 
-            BlockingDriverRepository secondBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
+            DriverRepository secondBlockingDriverRepository = searchRequest -> Mono.just(new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
                     .delayElement(Duration.ofSeconds(3));
 
             return List.of(firstBlockingDriverRepository, secondBlockingDriverRepository);
         }
 
-        @Override
-        public List<ReactiveDriverRepository> getReactiveDriversFor(OneWaySearchRequest oneWaySearchRequest) {
-            return null;
-        }
 
     }
 

@@ -3,7 +3,7 @@ package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.blocking;
 import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.BlockingDriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.DriverRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -18,7 +18,7 @@ import java.util.Locale;
 
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.GREEN;
 
-public class GreenBlockingDriverRepository implements BlockingDriverRepository {
+public class GreenBlockingDriverRepository implements DriverRepository {
 
     private static final Logger log = LoggerFactory.getLogger(GreenBlockingDriverRepository.class);
 
