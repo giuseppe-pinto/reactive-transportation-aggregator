@@ -4,7 +4,7 @@ import giuseppe.pinto.transportation.aggregator.domain.Supplier;
 import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.SuppliersConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
@@ -31,7 +31,7 @@ class StandardSupplierOutcomeServiceTest {
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
 
         StandardSuppliersOutcomeService underTest =
-                new StandardSuppliersOutcomeService(new FakeDriverConfigurationRepository());
+                new StandardSuppliersOutcomeService(new FakeSuppliersConfigurationRepository());
 
         Flux<SupplierOutcome> actualTrips = underTest.from(createSearchRequest());
 
@@ -44,11 +44,11 @@ class StandardSupplierOutcomeServiceTest {
 
     }
 
-    private static class FakeDriverConfigurationRepository implements DriverConfigurationRepository{
+    private static class FakeSuppliersConfigurationRepository implements SuppliersConfigurationRepository {
 
 
         @Override
-        public Flux<SupplierRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
+        public Flux<SupplierRepository> getSuppliersFor(OneWaySearchRequest oneWaySearchRequest) {
 
             SupplierRepository firstSupplierRepository = searchRequest -> Flux.just(
                     new SupplierOutcome(List.of(createTripWith(searchRequest, BLUE))))

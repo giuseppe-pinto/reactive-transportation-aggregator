@@ -5,10 +5,10 @@ import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.Request
 import giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto.SolutionsAdapter;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardSearchUseCase;
 import giuseppe.pinto.transportation.aggregator.adapter.secondary.in.StandardSuppliersOutcomeService;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.SimpleDriversConfigurationRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.SimpleSuppliersConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.in.SearchUseCase;
 import giuseppe.pinto.transportation.aggregator.port.in.SuppliersOutcomeService;
-import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.SuppliersConfigurationRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -18,13 +18,13 @@ import org.springframework.context.annotation.Import;
 public class TransportationAggregatorConfiguration {
 
     @Bean
-    public DriverConfigurationRepository driverConfigurationRepository(){
-        return new SimpleDriversConfigurationRepository(true);
+    public SuppliersConfigurationRepository driverConfigurationRepository(){
+        return new SimpleSuppliersConfigurationRepository(true);
     }
 
     @Bean
-    public SuppliersOutcomeService tripsRepository(DriverConfigurationRepository driverConfigurationRepository){
-        return new StandardSuppliersOutcomeService(driverConfigurationRepository);
+    public SuppliersOutcomeService tripsRepository(SuppliersConfigurationRepository suppliersConfigurationRepository){
+        return new StandardSuppliersOutcomeService(suppliersConfigurationRepository);
     }
 
     @Bean
