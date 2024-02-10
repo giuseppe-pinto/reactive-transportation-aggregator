@@ -4,6 +4,8 @@ import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 
 import java.math.BigDecimal;
@@ -15,8 +17,11 @@ import java.util.Locale;
 import static giuseppe.pinto.transportation.aggregator.domain.Driver.GREEN;
 
 public class GreenReactiveDriverRepository implements DriverRepository {
+    private static final Logger log = LoggerFactory.getLogger(GreenReactiveDriverRepository.class);
     @Override
     public Flux<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
+
+        log.info("Calling the provider: " + GREEN);
 
         List<Trip> firstChunk = List.of(
                 new Trip(oneWaySearchRequest.departure(),
@@ -51,7 +56,7 @@ public class GreenReactiveDriverRepository implements DriverRepository {
 
         return Flux.just(new DriverOutcome(firstChunk),
                 new DriverOutcome(secondChunk),
-                new DriverOutcome(thirdChunk)).delayElements(Duration.ofSeconds(1));
+                new DriverOutcome(thirdChunk)).delayElements(Duration.ofMillis(3000));
 
     }
 

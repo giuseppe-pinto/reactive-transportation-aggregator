@@ -8,19 +8,12 @@ import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.rea
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
 import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
 public class SimpleDriversConfigurationRepository implements DriverConfigurationRepository {
 
-    private static final List<DriverRepository> reactiveDriverRepository =
-            List.of(
-                    new GreenReactiveDriverRepository(),
-                    new BlueReactiveDriverRepository());
-    private static final List<DriverRepository> blockingDriverRepository =
-            List.of(new BlueBlockingDriverRepository(),
-                    new RedBlockingDriverRepository(),
-                    new GreenBlockingDriverRepository());
     private final boolean useReactive;
 
     public SimpleDriversConfigurationRepository(boolean useReactive) {
@@ -28,10 +21,13 @@ public class SimpleDriversConfigurationRepository implements DriverConfiguration
     }
 
     @Override
-    public List<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
+    public Flux<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
         if(useReactive){
-            return reactiveDriverRepository;
+            return Flux.just(new GreenReactiveDriverRepository(),
+                    new BlueReactiveDriverRepository());
         }
-        return blockingDriverRepository;
+        return Flux.just(new BlueBlockingDriverRepository(),
+                new RedBlockingDriverRepository(),
+                new GreenBlockingDriverRepository());
     }
 }

@@ -1,0 +1,8 @@
+GET
+    http://localhost:8080/aggregator/search?
+    departure=MIL
+    &arrival=NAP
+    &departureDate=2024-05-11
+
+<> 2024-02-10T115415.200.json
+

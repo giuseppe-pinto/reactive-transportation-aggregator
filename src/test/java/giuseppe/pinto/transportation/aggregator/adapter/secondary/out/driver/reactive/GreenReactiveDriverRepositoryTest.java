@@ -74,7 +74,7 @@ class GreenReactiveDriverRepositoryTest {
                 .expectNext(thirdDriverResult)
                 .expectComplete()
                 .verifyThenAssertThat()
-                .tookLessThan(Duration.ofMillis(3500));
+                .tookLessThan(Duration.ofMillis(9500));
 
     }
 

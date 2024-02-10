@@ -47,9 +47,9 @@ class TransportationAggregatorIntegrationTest {
                 .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
                         "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|GREEN_SECOND_AIRLINE|2000|135.00|EUR|GREEN"))))
                 .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
-                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|GREEN_THIRD_AIRLINE|3000|325.00|EUR|GREEN"))))
-                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
                         "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_SECOND_AIRLINE|2000|35.00|EUR|BLUE"))))
+                .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
+                        "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|GREEN_THIRD_AIRLINE|3000|325.00|EUR|GREEN"))))
                 .consumeNextWith(solutions -> assertionAndLogOn(solutions, new Solutions(List.of(
                         "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_THIRD_AIRLINE|3001|35.00|EUR|BLUE",
                         "MXP|NAP|2024-11-12:16-00|2024-11-12:19-00|BLUE_THIRD_AIRLINE|3002|35.00|EUR|BLUE",

@@ -48,7 +48,7 @@ class StandardDriverOutcomeServiceTest {
 
 
         @Override
-        public List<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
+        public Flux<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
 
             DriverRepository firstDriverRepository = searchRequest -> Flux.just(
                     new DriverOutcome(List.of(createTripWith(searchRequest, BLUE))))
@@ -58,7 +58,7 @@ class StandardDriverOutcomeServiceTest {
                     new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
                     .delayElements(Duration.ofSeconds(3));
 
-            return List.of(firstDriverRepository, secondDriverRepository);
+            return Flux.just(firstDriverRepository, secondDriverRepository);
         }
 
 
