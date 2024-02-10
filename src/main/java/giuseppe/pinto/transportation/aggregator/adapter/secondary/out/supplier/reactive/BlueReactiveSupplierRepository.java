@@ -1,9 +1,9 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.reactive;
 
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -14,15 +14,14 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.BLUE;
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.GREEN;
+import static giuseppe.pinto.transportation.aggregator.domain.Supplier.BLUE;
 
-public class BlueReactiveDriverRepository implements DriverRepository {
+public class BlueReactiveSupplierRepository implements SupplierRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(BlueReactiveDriverRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(BlueReactiveSupplierRepository.class);
 
     @Override
-    public Flux<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
+    public Flux<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
 
         log.info("Calling the provider: " + BLUE);
 
@@ -84,9 +83,9 @@ public class BlueReactiveDriverRepository implements DriverRepository {
                         Currency.getInstance(Locale.ITALY),
                         BLUE));
 
-        return Flux.just(new DriverOutcome(firstChunk),
-                new DriverOutcome(secondChunk),
-                new DriverOutcome(thirdChunk)).delayElements(Duration.ofMillis(3500));
+        return Flux.just(new SupplierOutcome(firstChunk),
+                new SupplierOutcome(secondChunk),
+                new SupplierOutcome(thirdChunk)).delayElements(Duration.ofMillis(3500));
 
     }
 

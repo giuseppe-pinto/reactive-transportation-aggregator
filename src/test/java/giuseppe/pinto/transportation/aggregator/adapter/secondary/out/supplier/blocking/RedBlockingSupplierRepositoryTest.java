@@ -1,8 +1,7 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.blocking;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.RedBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.domain.Driver;
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.Supplier;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-class RedBlockingDriverRepositoryTest {
+class RedBlockingSupplierRepositoryTest {
 
 
     private static final String DEPARTURE = "LIN";
@@ -28,12 +27,12 @@ class RedBlockingDriverRepositoryTest {
     @Test
     void driverRespondsIn5Seconds() {
 
-        RedBlockingDriverRepository underTest = new RedBlockingDriverRepository();
+        RedBlockingSupplierRepository underTest = new RedBlockingSupplierRepository();
 
-        Mono<DriverOutcome> performed = underTest.performRequest(request());
+        Mono<SupplierOutcome> performed = underTest.performRequest(request());
 
 
-        DriverOutcome providerResult = new DriverOutcome(List.of(new Trip(
+        SupplierOutcome providerResult = new SupplierOutcome(List.of(new Trip(
                 DEPARTURE,
                 ARRIVAL,
                 DEPARTURE_DATE.atTime(10, 0),
@@ -42,7 +41,7 @@ class RedBlockingDriverRepositoryTest {
                 "FIRST_RED_AIRLINE",
                 new BigDecimal("60.00"),
                 Currency.getInstance(Locale.ITALY),
-                Driver.RED
+                Supplier.RED
         ), new Trip(
                 DEPARTURE,
                 ARRIVAL,
@@ -52,7 +51,7 @@ class RedBlockingDriverRepositoryTest {
                 "SECOND_RED_AIRLINE",
                 new BigDecimal("5.00"),
                 Currency.getInstance(Locale.ITALY),
-                Driver.RED
+                Supplier.RED
         )));
 
 

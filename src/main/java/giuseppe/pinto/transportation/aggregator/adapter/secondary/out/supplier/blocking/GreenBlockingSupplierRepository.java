@@ -1,9 +1,9 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.blocking;
 
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -16,14 +16,14 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.GREEN;
+import static giuseppe.pinto.transportation.aggregator.domain.Supplier.GREEN;
 
-public class GreenBlockingDriverRepository implements DriverRepository {
+public class GreenBlockingSupplierRepository implements SupplierRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(GreenBlockingDriverRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(GreenBlockingSupplierRepository.class);
 
     @Override
-    public Mono<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
+    public Mono<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
         log.info("Calling the provider: " + GREEN);
 
 
@@ -40,7 +40,7 @@ public class GreenBlockingDriverRepository implements DriverRepository {
                         GREEN
                 ));
 
-        return Mono.just(new DriverOutcome(trips))
+        return Mono.just(new SupplierOutcome(trips))
                 .delayElement(Duration.ofSeconds(7));
 
     }

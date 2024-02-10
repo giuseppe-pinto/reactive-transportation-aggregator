@@ -12,5 +12,5 @@ public record Trip(String departure,
                    String carrier,
                    BigDecimal price,
                    Currency currency,
-                   Driver driver) {
+                   Supplier supplier) {
 }

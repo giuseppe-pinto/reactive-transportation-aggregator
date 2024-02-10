@@ -1,16 +1,14 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.out;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.BlueBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.GreenBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking.RedBlockingDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive.BlueReactiveDriverRepository;
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive.GreenReactiveDriverRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.blocking.BlueBlockingSupplierRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.blocking.GreenBlockingSupplierRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.blocking.RedBlockingSupplierRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.reactive.BlueReactiveSupplierRepository;
+import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.reactive.GreenReactiveSupplierRepository;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import reactor.core.publisher.Flux;
-
-import java.util.List;
 
 public class SimpleDriversConfigurationRepository implements DriverConfigurationRepository {
 
@@ -21,13 +19,13 @@ public class SimpleDriversConfigurationRepository implements DriverConfiguration
     }
 
     @Override
-    public Flux<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
+    public Flux<SupplierRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
         if(useReactive){
-            return Flux.just(new GreenReactiveDriverRepository(),
-                    new BlueReactiveDriverRepository());
+            return Flux.just(new GreenReactiveSupplierRepository(),
+                    new BlueReactiveSupplierRepository());
         }
-        return Flux.just(new BlueBlockingDriverRepository(),
-                new RedBlockingDriverRepository(),
-                new GreenBlockingDriverRepository());
+        return Flux.just(new BlueBlockingSupplierRepository(),
+                new RedBlockingSupplierRepository(),
+                new GreenBlockingSupplierRepository());
     }
 }

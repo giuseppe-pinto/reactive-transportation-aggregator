@@ -1,8 +1,7 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.reactive;
 
-import giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive.GreenReactiveDriverRepository;
-import giuseppe.pinto.transportation.aggregator.domain.Driver;
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.Supplier;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-class GreenReactiveDriverRepositoryTest {
+class GreenReactiveSupplierRepositoryTest {
 
     private static final String DEPARTURE = "LIN";
     private static final String ARRIVAL = "NAP";
@@ -26,11 +25,11 @@ class GreenReactiveDriverRepositoryTest {
     @Test
     void driverRespondsIn3Seconds() {
 
-        GreenReactiveDriverRepository underTest = new GreenReactiveDriverRepository();
+        GreenReactiveSupplierRepository underTest = new GreenReactiveSupplierRepository();
 
-        Flux<DriverOutcome> performed = underTest.performRequest(request());
+        Flux<SupplierOutcome> performed = underTest.performRequest(request());
 
-        DriverOutcome firstDriverResult = new DriverOutcome(
+        SupplierOutcome firstDriverResult = new SupplierOutcome(
                 List.of(new Trip(
                         DEPARTURE,
                         ARRIVAL,
@@ -40,11 +39,11 @@ class GreenReactiveDriverRepositoryTest {
                         "GREEN_FIRST_AIRLINE",
                         new BigDecimal("100.00"),
                         Currency.getInstance(Locale.ITALY),
-                        Driver.GREEN
+                        Supplier.GREEN
                 )));
 
 
-        DriverOutcome secondDriverResult = new DriverOutcome(
+        SupplierOutcome secondDriverResult = new SupplierOutcome(
                 List.of(new Trip(
                         DEPARTURE,
                         ARRIVAL,
@@ -54,9 +53,9 @@ class GreenReactiveDriverRepositoryTest {
                         "GREEN_SECOND_AIRLINE",
                         new BigDecimal("135.00"),
                         Currency.getInstance(Locale.ITALY),
-                        Driver.GREEN
+                        Supplier.GREEN
                 )));
-        DriverOutcome thirdDriverResult = new DriverOutcome(List.of(new Trip(
+        SupplierOutcome thirdDriverResult = new SupplierOutcome(List.of(new Trip(
                 DEPARTURE,
                 ARRIVAL,
                 DEPARTURE_DATE.atTime(16, 0),
@@ -65,7 +64,7 @@ class GreenReactiveDriverRepositoryTest {
                 "GREEN_THIRD_AIRLINE",
                 new BigDecimal("325.00"),
                 Currency.getInstance(Locale.ITALY),
-                Driver.GREEN
+                Supplier.GREEN
         )));
 
         StepVerifier.create(performed)

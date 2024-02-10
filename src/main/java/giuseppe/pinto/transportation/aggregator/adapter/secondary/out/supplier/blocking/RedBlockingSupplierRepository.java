@@ -1,9 +1,9 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.blocking;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.blocking;
 
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -14,14 +14,14 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.RED;
+import static giuseppe.pinto.transportation.aggregator.domain.Supplier.RED;
 
-public class RedBlockingDriverRepository implements DriverRepository {
+public class RedBlockingSupplierRepository implements SupplierRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(RedBlockingDriverRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(RedBlockingSupplierRepository.class);
 
     @Override
-    public Mono<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
+    public Mono<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
         log.info("Calling the provider: " + RED);
 
 
@@ -50,7 +50,7 @@ public class RedBlockingDriverRepository implements DriverRepository {
         List<Trip> trips = List.of(trip, secondTrip);
 
 
-        return Mono.just(new DriverOutcome(trips))
+        return Mono.just(new SupplierOutcome(trips))
                 .delayElement(Duration.ofSeconds(5));
     }
 }

@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.adapter.primary.rest.dto;
 
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import reactor.core.publisher.Flux;
 
 import java.time.format.DateTimeFormatter;
@@ -11,7 +11,7 @@ public class SolutionsAdapter {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH-ss");
 
 
-    public Flux<Solutions> from(Flux<DriverOutcome> driverOutcomes){
+    public Flux<Solutions> from(Flux<SupplierOutcome> driverOutcomes){
 
         return driverOutcomes
                 .map(driverOutcome -> new Solutions(driverOutcome.trips().stream().map(trip -> String.join( "|",
@@ -23,7 +23,7 @@ public class SolutionsAdapter {
                                 trip.carrierNumber(),
                                 trip.price().toString(),
                                 trip.currency().getCurrencyCode(),
-                                trip.driver().name())).collect(Collectors.toList())));
+                                trip.supplier().name())).collect(Collectors.toList())));
 
     }
 

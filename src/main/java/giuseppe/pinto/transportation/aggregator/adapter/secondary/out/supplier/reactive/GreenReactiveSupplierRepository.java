@@ -1,9 +1,9 @@
-package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.driver.reactive;
+package giuseppe.pinto.transportation.aggregator.adapter.secondary.out.supplier.reactive;
 
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
-import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -14,12 +14,12 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.GREEN;
+import static giuseppe.pinto.transportation.aggregator.domain.Supplier.GREEN;
 
-public class GreenReactiveDriverRepository implements DriverRepository {
-    private static final Logger log = LoggerFactory.getLogger(GreenReactiveDriverRepository.class);
+public class GreenReactiveSupplierRepository implements SupplierRepository {
+    private static final Logger log = LoggerFactory.getLogger(GreenReactiveSupplierRepository.class);
     @Override
-    public Flux<DriverOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
+    public Flux<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
 
         log.info("Calling the provider: " + GREEN);
 
@@ -54,9 +54,9 @@ public class GreenReactiveDriverRepository implements DriverRepository {
                 Currency.getInstance(Locale.ITALY),
                 GREEN));
 
-        return Flux.just(new DriverOutcome(firstChunk),
-                new DriverOutcome(secondChunk),
-                new DriverOutcome(thirdChunk)).delayElements(Duration.ofMillis(3000));
+        return Flux.just(new SupplierOutcome(firstChunk),
+                new SupplierOutcome(secondChunk),
+                new SupplierOutcome(thirdChunk)).delayElements(Duration.ofMillis(3000));
 
     }
 

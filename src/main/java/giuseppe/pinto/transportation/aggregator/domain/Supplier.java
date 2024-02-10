@@ -1,6 +1,6 @@
 package giuseppe.pinto.transportation.aggregator.domain;
 
-public enum Driver {
+public enum Supplier {
     BLUE,
     RED,
     GREEN

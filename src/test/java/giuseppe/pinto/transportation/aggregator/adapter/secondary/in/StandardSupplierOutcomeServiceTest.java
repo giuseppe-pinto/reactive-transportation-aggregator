@@ -1,11 +1,11 @@
 package giuseppe.pinto.transportation.aggregator.adapter.secondary.in;
 
-import giuseppe.pinto.transportation.aggregator.domain.Driver;
-import giuseppe.pinto.transportation.aggregator.domain.DriverOutcome;
+import giuseppe.pinto.transportation.aggregator.domain.Supplier;
+import giuseppe.pinto.transportation.aggregator.domain.SupplierOutcome;
 import giuseppe.pinto.transportation.aggregator.domain.OneWaySearchRequest;
 import giuseppe.pinto.transportation.aggregator.domain.Trip;
 import giuseppe.pinto.transportation.aggregator.port.out.DriverConfigurationRepository;
-import giuseppe.pinto.transportation.aggregator.port.out.driver.DriverRepository;
+import giuseppe.pinto.transportation.aggregator.port.out.supplier.SupplierRepository;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
@@ -18,10 +18,10 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.BLUE;
-import static giuseppe.pinto.transportation.aggregator.domain.Driver.RED;
+import static giuseppe.pinto.transportation.aggregator.domain.Supplier.BLUE;
+import static giuseppe.pinto.transportation.aggregator.domain.Supplier.RED;
 
-class StandardDriverOutcomeServiceTest {
+class StandardSupplierOutcomeServiceTest {
 
     private static final String DEPARTURE = "MIL";
     private static final String ARRIVAL = "NAP";
@@ -30,14 +30,14 @@ class StandardDriverOutcomeServiceTest {
     @Test
     void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
 
-        StandardDriverOutcomeService underTest =
-                new StandardDriverOutcomeService(new FakeDriverConfigurationRepository());
+        StandardSuppliersOutcomeService underTest =
+                new StandardSuppliersOutcomeService(new FakeDriverConfigurationRepository());
 
-        Flux<DriverOutcome> actualTrips = underTest.from(createSearchRequest());
+        Flux<SupplierOutcome> actualTrips = underTest.from(createSearchRequest());
 
         StepVerifier.create(actualTrips)
-                .expectNext(new DriverOutcome(List.of(createTripWith(createSearchRequest(), BLUE))))
-                .expectNext(new DriverOutcome(List.of(createTripWith(createSearchRequest(), RED))))
+                .expectNext(new SupplierOutcome(List.of(createTripWith(createSearchRequest(), BLUE))))
+                .expectNext(new SupplierOutcome(List.of(createTripWith(createSearchRequest(), RED))))
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookMoreThan(Duration.ofSeconds(3));
@@ -48,17 +48,17 @@ class StandardDriverOutcomeServiceTest {
 
 
         @Override
-        public Flux<DriverRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
+        public Flux<SupplierRepository> getDriversFor(OneWaySearchRequest oneWaySearchRequest) {
 
-            DriverRepository firstDriverRepository = searchRequest -> Flux.just(
-                    new DriverOutcome(List.of(createTripWith(searchRequest, BLUE))))
+            SupplierRepository firstSupplierRepository = searchRequest -> Flux.just(
+                    new SupplierOutcome(List.of(createTripWith(searchRequest, BLUE))))
                     .delayElements(Duration.ofSeconds(1));
 
-            DriverRepository secondDriverRepository = searchRequest -> Flux.just(
-                    new DriverOutcome((List.of(createTripWith(searchRequest, RED)))))
+            SupplierRepository secondSupplierRepository = searchRequest -> Flux.just(
+                    new SupplierOutcome((List.of(createTripWith(searchRequest, RED)))))
                     .delayElements(Duration.ofSeconds(3));
 
-            return Flux.just(firstDriverRepository, secondDriverRepository);
+            return Flux.just(firstSupplierRepository, secondSupplierRepository);
         }
 
 
@@ -74,7 +74,7 @@ class StandardDriverOutcomeServiceTest {
     }
 
 
-    private static Trip createTripWith(OneWaySearchRequest oneWaySearchRequest, Driver driver) {
+    private static Trip createTripWith(OneWaySearchRequest oneWaySearchRequest, Supplier supplier) {
         return new Trip(
                 oneWaySearchRequest.departure(),
                 oneWaySearchRequest.arrival(),
@@ -84,6 +84,6 @@ class StandardDriverOutcomeServiceTest {
                 "AIRLINE",
                 new BigDecimal("10.00"),
                 Currency.getInstance(Locale.ITALY),
-                driver);
+                supplier);
     }
 }
