@@ -25,7 +25,7 @@ public class BlueBlockingSupplierRepository implements SupplierRepository {
 
     @Override
     public Mono<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
-        log.info("Calling the provider: " + BLUE);
+        log.info("Calling the supplier: " + BLUE);
 
         List<Trip> trips = List.of(new Trip(
                 oneWaySearchRequest.departure(),

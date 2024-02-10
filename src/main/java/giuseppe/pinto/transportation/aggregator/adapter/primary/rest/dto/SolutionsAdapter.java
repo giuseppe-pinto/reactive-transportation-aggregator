@@ -11,10 +11,10 @@ public class SolutionsAdapter {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH-ss");
 
 
-    public Flux<Solutions> from(Flux<SupplierOutcome> driverOutcomes){
+    public Flux<Solutions> from(Flux<SupplierOutcome> supplierOutcomeFlux){
 
-        return driverOutcomes
-                .map(driverOutcome -> new Solutions(driverOutcome.trips().stream().map(trip -> String.join( "|",
+        return supplierOutcomeFlux
+                .map(supplierOutcome -> new Solutions(supplierOutcome.trips().stream().map(trip -> String.join( "|",
                                 trip.departure(),
                                 trip.arrival(),
                                 trip.departureDate().format(formatter),

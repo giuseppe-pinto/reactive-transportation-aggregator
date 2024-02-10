@@ -25,14 +25,14 @@ class RedBlockingSupplierRepositoryTest {
             LocalDate.of(2023, Month.NOVEMBER, 12);
 
     @Test
-    void driverRespondsIn5Seconds() {
+    void supplierRespondsIn5Seconds() {
 
         RedBlockingSupplierRepository underTest = new RedBlockingSupplierRepository();
 
         Mono<SupplierOutcome> performed = underTest.performRequest(request());
 
 
-        SupplierOutcome providerResult = new SupplierOutcome(List.of(new Trip(
+        SupplierOutcome supplierOutcome = new SupplierOutcome(List.of(new Trip(
                 DEPARTURE,
                 ARRIVAL,
                 DEPARTURE_DATE.atTime(10, 0),
@@ -56,7 +56,7 @@ class RedBlockingSupplierRepositoryTest {
 
 
         StepVerifier.create(performed)
-                .expectNext(providerResult)
+                .expectNext(supplierOutcome)
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookLessThan(Duration.ofSeconds(6));

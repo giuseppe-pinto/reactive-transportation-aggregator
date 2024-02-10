@@ -21,7 +21,7 @@ public class GreenReactiveSupplierRepository implements SupplierRepository {
     @Override
     public Flux<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
 
-        log.info("Calling the provider: " + GREEN);
+        log.info("Calling the supplier: " + GREEN);
 
         List<Trip> firstChunk = List.of(
                 new Trip(oneWaySearchRequest.departure(),

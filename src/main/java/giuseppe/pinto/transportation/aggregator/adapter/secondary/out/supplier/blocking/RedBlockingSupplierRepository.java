@@ -22,7 +22,7 @@ public class RedBlockingSupplierRepository implements SupplierRepository {
 
     @Override
     public Mono<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
-        log.info("Calling the provider: " + RED);
+        log.info("Calling the supplier: " + RED);
 
 
         Trip trip = new Trip(

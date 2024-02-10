@@ -22,7 +22,7 @@ public class StandardSuppliersOutcomeService implements SuppliersOutcomeService 
                 .getSuppliersFor(oneWaySearchRequest)
                 .parallel()
                 .runOn(Schedulers.parallel())
-                .flatMap(driverRepository -> driverRepository.performRequest(oneWaySearchRequest))
+                .flatMap(supplier -> supplier.performRequest(oneWaySearchRequest))
                 .sequential();
 
     }

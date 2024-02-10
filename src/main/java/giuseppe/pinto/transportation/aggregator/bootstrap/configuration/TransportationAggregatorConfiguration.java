@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 public class TransportationAggregatorConfiguration {
 
     @Bean
-    public SuppliersConfigurationRepository driverConfigurationRepository(){
+    public SuppliersConfigurationRepository ConfigurationRepository(){
         return new SimpleSuppliersConfigurationRepository(true);
     }
 

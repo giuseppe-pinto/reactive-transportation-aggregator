@@ -28,7 +28,7 @@ class StandardSupplierOutcomeServiceTest {
     private static final LocalDate DEPARTURE_DATE = LocalDate.of(2023, Month.NOVEMBER, 12);
 
     @Test
-    void allTheDriversAreCalledAndReturnTripsInDifferentMoment() {
+    void allThesAreCalledAndReturnTripsInDifferentMoment() {
 
         StandardSuppliersOutcomeService underTest =
                 new StandardSuppliersOutcomeService(new FakeSuppliersConfigurationRepository());

@@ -23,13 +23,13 @@ class GreenReactiveSupplierRepositoryTest {
 
 
     @Test
-    void driverRespondsIn3Seconds() {
+    void supplierRespondsIn3Seconds() {
 
         GreenReactiveSupplierRepository underTest = new GreenReactiveSupplierRepository();
 
         Flux<SupplierOutcome> performed = underTest.performRequest(request());
 
-        SupplierOutcome firstDriverResult = new SupplierOutcome(
+        SupplierOutcome firstSupplierResult = new SupplierOutcome(
                 List.of(new Trip(
                         DEPARTURE,
                         ARRIVAL,
@@ -43,7 +43,7 @@ class GreenReactiveSupplierRepositoryTest {
                 )));
 
 
-        SupplierOutcome secondDriverResult = new SupplierOutcome(
+        SupplierOutcome secondSupplierResult = new SupplierOutcome(
                 List.of(new Trip(
                         DEPARTURE,
                         ARRIVAL,
@@ -55,7 +55,7 @@ class GreenReactiveSupplierRepositoryTest {
                         Currency.getInstance(Locale.ITALY),
                         Supplier.GREEN
                 )));
-        SupplierOutcome thirdDriverResult = new SupplierOutcome(List.of(new Trip(
+        SupplierOutcome thirdSupplierResult = new SupplierOutcome(List.of(new Trip(
                 DEPARTURE,
                 ARRIVAL,
                 DEPARTURE_DATE.atTime(16, 0),
@@ -68,9 +68,9 @@ class GreenReactiveSupplierRepositoryTest {
         )));
 
         StepVerifier.create(performed)
-                .expectNext(firstDriverResult)
-                .expectNext(secondDriverResult)
-                .expectNext(thirdDriverResult)
+                .expectNext(firstSupplierResult)
+                .expectNext(secondSupplierResult)
+                .expectNext(thirdSupplierResult)
                 .expectComplete()
                 .verifyThenAssertThat()
                 .tookLessThan(Duration.ofMillis(9500));

@@ -24,7 +24,7 @@ public class GreenBlockingSupplierRepository implements SupplierRepository {
 
     @Override
     public Mono<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
-        log.info("Calling the provider: " + GREEN);
+        log.info("Calling the supplier: " + GREEN);
 
 
         List<Trip> trips = List.of(

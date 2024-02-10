@@ -23,7 +23,7 @@ public class BlueReactiveSupplierRepository implements SupplierRepository {
     @Override
     public Flux<SupplierOutcome> performRequest(OneWaySearchRequest oneWaySearchRequest) {
 
-        log.info("Calling the provider: " + BLUE);
+        log.info("Calling the supplier: " + BLUE);
 
         List<Trip> firstChunk = List.of(
                 new Trip(oneWaySearchRequest.departure(),
